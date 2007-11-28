@@ -4,7 +4,7 @@
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="../../../style.css" type="text/css" media="screen">
 <link rel="stylesheet" href="../../../print.css" type="text/css" media="print">
-<meta content="ArgumentExpectation,com.anywebcam.mock.ArgumentExpectation,NO_ARGS,ANYTHING,NUMBER,BOOLEAN,STRING,CLASS,FUNCTION,REGEXP,LITERAL,constraintClasses,expectedArguments,convertArgConstraints,convertConstraint,argumentsMatch,constraintsMatch" name="keywords">
+<meta content="ArgumentExpectation,com.anywebcam.mock.ArgumentExpectation,NO_ARGS,ANYTHING,expectedArguments,convertArgConstraints,convertConstraint,argumentsMatch,constraintsMatch" name="keywords">
 <title>com.anywebcam.mock.ArgumentExpectation</title>
 </head>
 <body>
@@ -50,12 +50,6 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <table id="summaryTableProperty" class="summaryTable " cellpadding="3" cellspacing="0">
 <tr>
 <th>&nbsp;</th><th colspan="2">Property</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#constraintClasses">constraintClasses</a> : Object<div class="summaryTableDescription">[static]
-   Map of names to ArgumentConstraint classes
-   </div>
-</td><td class="summaryTableOwnerCol">ArgumentExpectation</td>
 </tr>
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#expectedArguments">expectedArguments</a> : Array<div class="summaryTableDescription">[read-only]
@@ -142,35 +136,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 </td><td class="summaryTableOwnerCol">ArgumentExpectation</td>
 </tr>
 <tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#BOOLEAN">BOOLEAN</a> : String = "Boolean"<div class="summaryTableDescription">[static]</div>
-</td><td class="summaryTableOwnerCol">ArgumentExpectation</td>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#CLASS">CLASS</a> : String = "Class"<div class="summaryTableDescription">[static]</div>
-</td><td class="summaryTableOwnerCol">ArgumentExpectation</td>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#FUNCTION">FUNCTION</a> : String = "Function"<div class="summaryTableDescription">[static]</div>
-</td><td class="summaryTableOwnerCol">ArgumentExpectation</td>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#LITERAL">LITERAL</a> : String = "Literal"<div class="summaryTableDescription">[static]</div>
-</td><td class="summaryTableOwnerCol">ArgumentExpectation</td>
-</tr>
-<tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#NO_ARGS">NO_ARGS</a> : String = "NoArgs"<div class="summaryTableDescription">[static]</div>
-</td><td class="summaryTableOwnerCol">ArgumentExpectation</td>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#NUMBER">NUMBER</a> : String = "Number"<div class="summaryTableDescription">[static]</div>
-</td><td class="summaryTableOwnerCol">ArgumentExpectation</td>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#REGEXP">REGEXP</a> : String = "RegExp"<div class="summaryTableDescription">[static]</div>
-</td><td class="summaryTableOwnerCol">ArgumentExpectation</td>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#STRING">STRING</a> : String = "String"<div class="summaryTableDescription">[static]</div>
 </td><td class="summaryTableOwnerCol">ArgumentExpectation</td>
 </tr>
 </table>
@@ -182,20 +148,10 @@ showHideInherited();
 <div class="MainContent">
 <a name="propertyDetail"></a>
 <div class="detailSectionHeader">Property detail</div>
-<a name="constraintClasses"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">constraintClasses</td><td class="detailHeaderType">property</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>public static var constraintClasses:Object</code><p>
-   Map of names to ArgumentConstraint classes
-   </p></div>
 <a name="expectedArguments"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">
 <tr>
-<td class="detailHeaderName">expectedArguments</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+<td class="detailHeaderName">expectedArguments</td><td class="detailHeaderType">property</td>
 </tr>
 </table>
 <div class="detailBody">
@@ -342,42 +298,6 @@ showHideInherited();
 <div class="detailBody">
 <code>public static const ANYTHING:String = "Anything"</code>
 </div>
-<a name="BOOLEAN"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">BOOLEAN</td><td class="detailHeaderType">constant</td><td class="detailHeaderRule">&nbsp;</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>public static const BOOLEAN:String = "Boolean"</code>
-</div>
-<a name="CLASS"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">CLASS</td><td class="detailHeaderType">constant</td><td class="detailHeaderRule">&nbsp;</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>public static const CLASS:String = "Class"</code>
-</div>
-<a name="FUNCTION"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">FUNCTION</td><td class="detailHeaderType">constant</td><td class="detailHeaderRule">&nbsp;</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>public static const FUNCTION:String = "Function"</code>
-</div>
-<a name="LITERAL"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">LITERAL</td><td class="detailHeaderType">constant</td><td class="detailHeaderRule">&nbsp;</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>public static const LITERAL:String = "Literal"</code>
-</div>
 <a name="NO_ARGS"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">
 <tr>
@@ -386,33 +306,6 @@ showHideInherited();
 </table>
 <div class="detailBody">
 <code>public static const NO_ARGS:String = "NoArgs"</code>
-</div>
-<a name="NUMBER"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">NUMBER</td><td class="detailHeaderType">constant</td><td class="detailHeaderRule">&nbsp;</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>public static const NUMBER:String = "Number"</code>
-</div>
-<a name="REGEXP"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">REGEXP</td><td class="detailHeaderType">constant</td><td class="detailHeaderRule">&nbsp;</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>public static const REGEXP:String = "RegExp"</code>
-</div>
-<a name="STRING"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">STRING</td><td class="detailHeaderType">constant</td><td class="detailHeaderRule">&nbsp;</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>public static const STRING:String = "String"</code>
 </div>
 <br>
 <br>

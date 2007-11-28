@@ -38,35 +38,32 @@ package com.anywebcam.mock
 		
 		public function testShouldConvertStringConstantToStringArgumentConstraint():void
 		{
-			var expect:ArgumentExpectation = new ArgumentExpectation( [ ArgumentExpectation.STRING ] );
+			var expect:ArgumentExpectation = new ArgumentExpectation( [ String ] );
 			
 			assertTrue( 'Expecting expectedArguments to be an Array', expect.expectedArguments is Array );
 			assertTrue( 'Expecting 1 ArgumentConstraint', expect.expectedArguments.length == 1 );
 			assertTrue( 'Expecting ArgumentConstraint to be a StringArgumentConstraint', 
-				(expect.expectedArguments[ 0 ] as ArgumentConstraint) 
-				is (ArgumentExpectation.constraintClasses[ ArgumentExpectation.STRING ] as Class) );
+				(expect.expectedArguments[ 0 ] as ArgumentConstraint) is StringArgumentConstraint );
 		}
 		
 		public function testShouldConvertNumberConstantToNumberArgumentConstraint():void
 		{
-			var expect:ArgumentExpectation = new ArgumentExpectation( [ ArgumentExpectation.NUMBER ] );
+			var expect:ArgumentExpectation = new ArgumentExpectation( [ Number ] );
 			
 			assertTrue( 'Expecting expectedArguments to be an Array', expect.expectedArguments is Array );
 			assertTrue( 'Expecting 1 ArgumentConstraint', expect.expectedArguments.length == 1 );
 			assertTrue( 'Expecting ArgumentConstraint to be a NumberArgumentConstraint', 
-				(expect.expectedArguments[ 0 ] as ArgumentConstraint) 
-				is (ArgumentExpectation.constraintClasses[ ArgumentExpectation.NUMBER ] as Class) );
+				(expect.expectedArguments[ 0 ] as ArgumentConstraint) is NumberArgumentConstraint );
 		}
 		
 		public function testShouldConvertBooleanConstantToNumberArgumentConstraint():void
 		{
-			var expect:ArgumentExpectation = new ArgumentExpectation( [ ArgumentExpectation.BOOLEAN ] );
+			var expect:ArgumentExpectation = new ArgumentExpectation( [ Boolean ] );
 			
 			assertTrue( 'Expecting expectedArguments to be an Array', expect.expectedArguments is Array );
 			assertTrue( 'Expecting 1 ArgumentConstraint', expect.expectedArguments.length == 1 );
 			assertTrue( 'Expecting ArgumentConstraint to be a BooleanArgumentConstraint', 
-				(expect.expectedArguments[ 0 ] as ArgumentConstraint) 
-				is (ArgumentExpectation.constraintClasses[ ArgumentExpectation.BOOLEAN ] as Class) );
+				(expect.expectedArguments[ 0 ] as ArgumentConstraint) is BooleanArgumentConstraint );
 		}
 		
 		public function testShouldConvertAnythingConstantToAnythingArgumentConstraint():void
@@ -82,8 +79,7 @@ package com.anywebcam.mock
 			assertTrue( 'Expecting expectedArguments to be an Array', expect.expectedArguments is Array );
 			assertTrue( 'Expecting 1 ArgumentConstraint', expect.expectedArguments.length == 1 );
 			assertTrue( 'Expecting ArgumentConstraint to be a ClassArgumentConstraint', 
-				(expect.expectedArguments[ 0 ] as ArgumentConstraint) 
-				is (ArgumentExpectation.constraintClasses[ ArgumentExpectation.CLASS ] as Class) );
+				(expect.expectedArguments[ 0 ] as ArgumentConstraint) is ClassArgumentConstraint );
 		}
 		
 		public function testShouldConvertFunctionArgumentsToFunctionArgumentConstraint():void
@@ -94,8 +90,7 @@ package com.anywebcam.mock
 			assertTrue( 'Expecting expectedArguments to be an Array', expect.expectedArguments is Array );
 			assertTrue( 'Expecting 1 ArgumentConstraint', expect.expectedArguments.length == 1 );
 			assertTrue( 'Expecting ArgumentConstraint to be a FunctionArgumentConstraint', 
-				(expect.expectedArguments[ 0 ] as ArgumentConstraint) 
-				is (ArgumentExpectation.constraintClasses[ ArgumentExpectation.FUNCTION ] as Class) );
+				(expect.expectedArguments[ 0 ] as ArgumentConstraint) is FunctionArgumentConstraint );
 		}
 		
 		public function testShouldConvertRegExpArgumentsToRegExpArgumentConstraint():void
@@ -107,7 +102,7 @@ package com.anywebcam.mock
 			assertTrue( 'Expecting 1 ArgumentConstraint', expect.expectedArguments.length == 1 );
 			assertTrue( 'Expecting ArgumentConstraint to be a RegExpArgumentConstraint', 
 				(expect.expectedArguments[ 0 ] as ArgumentConstraint) 
-				is (ArgumentExpectation.constraintClasses[ ArgumentExpectation.REGEXP ] as Class) );
+				is RegExpArgumentConstraint );
 		}
 		
 		public function testShouldConvertLiteralValueToLiteralValueArgumentConstraintIfArgumentIsNotAClassFunctionRegExpOrCustomMatcher():void
@@ -124,23 +119,17 @@ package com.anywebcam.mock
 			assertTrue( 'Expecting expectedArguments to be an Array', expect.expectedArguments is Array );
 			assertTrue( 'Expecting 6 ArgumentConstraints', expect.expectedArguments.length == 6 );
 			assertTrue( 'Expecting ArgumentConstraint to be a LiteralArgumentConstraint', 
-				(expect.expectedArguments[ 0 ] as ArgumentConstraint) 
-				is (ArgumentExpectation.constraintClasses[ ArgumentExpectation.LITERAL ] as Class) );
+				(expect.expectedArguments[ 0 ] as ArgumentConstraint) is LiteralArgumentConstraint );
 			assertTrue( 'Expecting ArgumentConstraint to be a LiteralArgumentConstraint', 
-				(expect.expectedArguments[ 1 ] as ArgumentConstraint) 
-				is (ArgumentExpectation.constraintClasses[ ArgumentExpectation.LITERAL ] as Class) );
+				(expect.expectedArguments[ 1 ] as ArgumentConstraint) is LiteralArgumentConstraint );
 			assertTrue( 'Expecting ArgumentConstraint to be a LiteralArgumentConstraint', 
-				(expect.expectedArguments[ 2 ] as ArgumentConstraint) 
-				is (ArgumentExpectation.constraintClasses[ ArgumentExpectation.LITERAL ] as Class) );
+				(expect.expectedArguments[ 2 ] as ArgumentConstraint) is LiteralArgumentConstraint );
 			assertTrue( 'Expecting ArgumentConstraint to be a ClassArgumentConstraint', 
-				(expect.expectedArguments[ 3 ] as ArgumentConstraint) 
-				is (ArgumentExpectation.constraintClasses[ ArgumentExpectation.CLASS ] as Class) );
+				(expect.expectedArguments[ 3 ] as ArgumentConstraint) is ClassArgumentConstraint );
 			assertTrue( 'Expecting ArgumentConstraint to be a FunctionArgumentConstraint', 
-				(expect.expectedArguments[ 4 ] as ArgumentConstraint) 
-				is (ArgumentExpectation.constraintClasses[ ArgumentExpectation.FUNCTION ] as Class) );
+				(expect.expectedArguments[ 4 ] as ArgumentConstraint) is FunctionArgumentConstraint );
 			assertTrue( 'Expecting ArgumentConstraint to be a RegExpArgumentConstraint', 
-				(expect.expectedArguments[ 5 ] as ArgumentConstraint) 
-				is (ArgumentExpectation.constraintClasses[ ArgumentExpectation.REGEXP ] as Class) );
+				(expect.expectedArguments[ 5 ] as ArgumentConstraint) is RegExpArgumentConstraint );
 		}
 		
 		public function testAnyArgumentConstraintShouldMatchAnyValue():void
@@ -158,7 +147,7 @@ package com.anywebcam.mock
 		
 		public function testNumberArgumentConstraintShouldMatchNumberUintOrInt():void
 		{
-			var expect:ArgumentExpectation = new ArgumentExpectation([ ArgumentExpectation.NUMBER ]);
+			var expect:ArgumentExpectation = new ArgumentExpectation([ Number ]);
 			
 			var n:Number = Number( 1 );
 			var u:uint = uint( 10000 );
@@ -175,7 +164,7 @@ package com.anywebcam.mock
 		
 		public function testBooleanArgumentConstraintShouldMatchBooleanTrueOrFalseOnly():void
 		{
-			var expect:ArgumentExpectation = new ArgumentExpectation([ ArgumentExpectation.BOOLEAN ]);
+			var expect:ArgumentExpectation = new ArgumentExpectation([ Boolean ]);
 			
 			var t:Boolean = true;
 			var f:Boolean = false;
@@ -193,7 +182,7 @@ package com.anywebcam.mock
 		
 		public function testStringArgumentConstraintShouldMatchAnyString():void
 		{
-			var expect:ArgumentExpectation = new ArgumentExpectation([ ArgumentExpectation.STRING ]);
+			var expect:ArgumentExpectation = new ArgumentExpectation([ String ]);
 
 			assertFalse( 'Expecting False', expect.argumentsMatch( null ) );
 			assertTrue( 'Expecting True', expect.argumentsMatch( [''] ) );

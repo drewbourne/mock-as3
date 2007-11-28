@@ -314,7 +314,7 @@ package com.anywebcam.mock
 		// invoke exactly
 		public function testShouldVerifyIfReceiveCountIsExactlyAndInvokedCorrectNumberOfTimes():void
 		{
-			e.method('test').exactly( 3 ).times;
+			e.method('test').exactly( 3 );
 			e.invoke( true );
 			e.invoke( true );
 			e.invoke( true );
@@ -323,7 +323,7 @@ package com.anywebcam.mock
 		
 		public function testShouldNotVerifyIfReceiveCountIsExactlyAndNotInvokedCorrectNumberOfTimes():void
 		{
-			e.method('test').exactly( 1 ).times;
+			e.method('test').exactly( 1 );
 			e.invoke( true );
 			e.invoke( true );
 			e.invoke( true );
@@ -333,7 +333,7 @@ package com.anywebcam.mock
 		// invoked less than, and more than
 		public function testShouldVerifyIfReceiveCountIsAtLeast():void
 		{
-			e.method('test').atLeast( 3 ).times;
+			e.method('test').atLeast( 3 );
 			
 			e.invoke( true );
 			assertFalse( e.verifyMessageReceived() );
@@ -351,7 +351,7 @@ package com.anywebcam.mock
 		// invoked less than, and more than
 		public function testShouldVerifyIfReceiveCountIsAtMost():void
 		{
-			e.method('test').atMost( 2 ).times;
+			e.method('test').atMost( 2 );
 			
 			e.invoke( true );
 			assertTrue( e.verifyMessageReceived() );
@@ -369,7 +369,7 @@ package com.anywebcam.mock
 		// at least, at most, at least & at most
 		public function testShouldVerifyIfReceiveCountIsAtLeastAndAtMost():void
 		{
-			e.method('test').atLeast( 2 ).times.atMost( 3 ).times;
+			e.method('test').atLeast( 2 ).atMost( 3 );
 			
 			e.invoke( true );
 			assertFalse( e.verifyMessageReceived() );

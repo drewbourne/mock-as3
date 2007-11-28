@@ -16,28 +16,6 @@ package com.anywebcam.mock
 	{
 		public static const NO_ARGS		:String = 'NoArgs';
 		public static const ANYTHING	:String = 'Anything';
-		public static const NUMBER		:String = 'Number';
-		public static const BOOLEAN		:String = 'Boolean';
-		public static const STRING		:String = 'String';
-		public static const CLASS			:String	= 'Class';
-		public static const FUNCTION	:String = 'Function';
-		public static const REGEXP		:String = 'RegExp';
-		public static const LITERAL		:String = 'Literal';
-
-		/**
-		 * Map of names to ArgumentConstraint classes
-		 */
-		public static var constraintClasses:Object =
-		{
-			'Anything': 	AnyArgumentConstraint,
-			'Number': 		NumberArgumentConstraint,
-			'Boolean': 		BooleanArgumentConstraint,
-			'String':			StringArgumentConstraint,
-			'Class':			ClassArgumentConstraint,
-			'Function':		FunctionArgumentConstraint,
-			'RegExp':			RegExpArgumentConstraint,
-			'Literal':		LiteralArgumentConstraint
-		};
 		
 		/**
 		 * Constructor
@@ -83,16 +61,24 @@ package com.anywebcam.mock
 		 */
 		protected function convertConstraint( constraint:Object, index:int, array:Array ):ArgumentConstraint
 		{
-			// symbol
-			if( [ANYTHING, NUMBER, BOOLEAN, STRING].indexOf( constraint ) > -1 )
-			{ 
-				return (new (constraintClasses[ constraint ] as Class)( constraint )) as ArgumentConstraint; 
+			// custom argument constraint
+			if( constraint is ArgumentConstraint )
+			{
+				return constraint as ArgumentConstraint;
 			}
 			
+			// types
+			switch( constraint )
+			{
+				case ANYTHING: 	return new AnyArgumentConstraint( constraint );
+				case Number: 		return new NumberArgumentConstraint( constraint );
+				case Boolean: 	return new BooleanArgumentConstraint( constraint );
+				case String: 		return new StringArgumentConstraint( constraint );
+			}
+			
+			// class
 			if( constraint is Class )
 			{
-				// todo: check if constraint is an ArgumentConstraint, if so create and use it instead of ClassArgumentConstraint
-				
 				return new ClassArgumentConstraint( constraint as Class );
 			}
 			
