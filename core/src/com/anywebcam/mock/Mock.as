@@ -26,6 +26,8 @@ package com.anywebcam.mock
 			_target = target;
 			_expectations = [];
 			_ignoreMissing = ignoreMissing || false;
+			_currentOrderNumber = 0;
+			_orderedExpectations = [];
 		}
 
 		private var _target:Object;
@@ -67,6 +69,16 @@ package com.anywebcam.mock
 		{
 			_expectations = value;
 		}
+		
+		/**
+		 * Current Order
+		 */
+		private var _currentOrderNumber:int;
+		
+		/**
+		 * 
+		 */
+		public var _orderedExpectations:Array;
 		
 		/**
 		 * String representation of this Mock
@@ -136,7 +148,7 @@ package com.anywebcam.mock
 		}
 		
 		/**
-		 * Find a matching expectation and inovke it
+		 * Find a matching expectation and invoke it
 		 *
 		 * @param propertyName The property or method name to find an expectation for
 		 * @param isMethod Indicates whether the expectation is for a method or a property
@@ -149,7 +161,6 @@ package com.anywebcam.mock
 			if( expectation ) 
 				return expectation.invoke( isMethod, args );
 			
-			// todo: negative expectations -- check what i meant by this
 			// todo: handle almost matching expectations?
 			
 			return null;
@@ -168,7 +179,7 @@ package com.anywebcam.mock
 		{
 			for each( var expectation:MockExpectation in _expectations )
 			{
-				if( expectation.matches( propertyName, isMethod, args ) )
+				if( expectation.matches( propertyName, isMethod, args ) && expectation.eligible() )
 				{
 					return expectation;
 				}
@@ -186,37 +197,25 @@ package com.anywebcam.mock
 		 * 
 		 * @private
 		 */
-		/*
-		public function orderExpectation( expectation:MockExpectation, group:String = null ):Number
+		mock_internal function orderExpectation( expectation:MockExpectation ):Number
 		{
-			group = group ? group : '_';
-			var orderGroup:Array = _orderedExpectations[ group ];
-			if( orderGroup == undefined )
-			{
-				orderGroup = _orderedExpectations[ group ] = { position: 0, expectations: [] };
-			}
-			var orderNumber:Number = orderGroup.length;
-			orderGroup.expectations.push( expectation );
+			var orderNumber:Number = _orderedExpectations.length;
+			_orderedExpectations.push( expectation );
 			return orderNumber;
 		}
-		*/
 		
 		/**
 		 * @private
 		 */
-		/*
-		public function receiveOrderedExpectation( expectation:MockExpectation, group:String = null ):void
+		mock_internal function receiveOrderedExpectation( expectation:MockExpectation, orderNumber:int ):void
 		{
-			group = group ? group : '_';
-			var orderGroup:Array = _orderedExpectations[ group ];
-			if( orderGroup == undefined )
-				throw new MockExpectationError( 'Ordered Expectation '+ expectation +' not in group '+ orderGroup );
+			if( orderNumber < _currentOrderNumber )
+			{
+				throw new MockExpectationError( 'Called out '+ expectation.name +' of order. Expected order '+ orderNumber +' was '+ _currentOrderNumber );
+			}
 			
-			if( orderGroup.expectations.indexOf( expectation )  )
-			
-			// check expectation is in correct position
+			_currentOrderNumber = orderNumber;
 		}
-		*/
 		
 		/// ---- mock handling ---- ///
 		

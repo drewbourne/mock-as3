@@ -84,13 +84,9 @@ package com.anywebcam.mock
 		{
 			try
 			{
-				trace( '--->' );
-
 				e.method('testMethod').once.withNoArgs;
 				e.invoke( true, [1, 2, 3] );
-
-				trace( '<---' );
-
+				
 				fail( 'Expecting invocation with arguments to throw an error' );
 			}
 			catch( error:MockExpectationError )
@@ -130,7 +126,7 @@ package com.anywebcam.mock
 			assertTrue( e.verifyMessageReceived() );
 		}
 		
-		public function testMethodExpectationShouldAcceptSpecificArgumentsAndFailVerityIfInvokeWithIncorrectArguments():void
+		public function testMethodExpectationShouldAcceptSpecificArgumentsAndFailVerifyIfInvokedWithIncorrectArguments():void
 		{
 			try
 			{
@@ -141,6 +137,27 @@ package com.anywebcam.mock
 			catch( error:MockExpectationError )
 			{
 				assertFalse( e.verifyMessageReceived() );	
+			}
+		}
+		
+		public function testMethodExpectationShouldAcceptSingleLiteralValue():void
+		{
+			e.method('icanhasone').withArgs( 1 );
+			e.invoke( true, [1] );
+			assertTrue( e.verifyMessageReceived() );
+		}
+		
+		public function testMethodExpectationShouldAcceptSingleLiteralValueAndFailVerifyIfInvokedWithIncorrectArguments():void
+		{
+			try
+			{
+				e.method('icanhasone').withArgs( 1 );
+				e.invoke(true, [0]);
+				fail( 'Expecting invocation with incorrect arguments to throw an error' );
+			}
+			catch( error:MockExpectationError )
+			{
+				assertFalse(e.verifyMessageReceived() );
 			}
 		}
 		
@@ -384,12 +401,45 @@ package com.anywebcam.mock
 			assertFalse( e.verifyMessageReceived() );
 		}
 		
+		// receive counts only apply to matching args
+		public function testReceiveCountShouldOnlyApplyToMatchingArguments():void
+		{
+			mock.method('hi').withArgs(1).once;
+			mock.method('hi').withArgs(2).twice;
+			mock.method('hi').withArgs(3);
+			mock.hi(1);
+			mock.hi(2);
+			mock.hi(2);
+			for( var i:int=0, n:int=20; i < n; i++ )
+			{
+				mock.hi(3);
+			}
+			assertTrue( mock.verify() );
+		}
+		
+		public function testReceiveCountShouldNotApplyToMismatchedArguments():void
+		{
+			mock.method('hi').withArgs(1).once;
+			mock.method('hi').withArgs(2).twice;
+			mock.method('hi').withArgs(3);
+			mock.method('lo');
+			
+			mock.hi(1);
+			mock.hi(2);
+			mock.lo();
+			for( var i:int=0, n:int=20; i < n; i++ )
+			{
+				mock.hi(3);
+			}
+			assertFalse( mock.verify() );
+		}
+		
 		// invoking functions
 		public function testShouldSetFunctionToInvokeOnInvokingExpectation():void
 		{
 			var invoked:int = 0;
 			
-			e.method('test').andCall( function():void { invoked++; } );
+			e.method('test').andCall( function():void { invoked++; });
 			e.invoke( true );
 			
 			assertEquals( 1, invoked );
@@ -399,13 +449,28 @@ package com.anywebcam.mock
 		{
 			var invoked:int = 0;
 			
-			e.method('test').andCall( function(args:Array=null):void { invoked++; } );
-			e.method('test').andCall( function(args:Array=null):void { invoked++; } );
-			e.method('test').andCall( function(args:Array=null):void { invoked++; } );
-			e.method('test').andCall( function(args:Array=null):void { invoked++; } );
+			e.method('test')
+				.andCall( function():void { invoked++; } )
+				.andCall( function():void { invoked++; } )
+				.andCall( function(args:Array=null):void { invoked++; } )
+				.andCall( function(args:Array=null):void { invoked++; } );
+
 			e.invoke( true );
 			
 			assertEquals( 4, invoked );
+		}
+		
+		public function testFunctionsToCallShouldReceiveArgsFromInvoke():void
+		{
+			e.method('test').withAnyArgs.calls( function(args:Array=null):void 
+			{  
+				assertEquals( 3, args.length );
+				assertEquals( args[0], 'one' );
+				assertEquals( args[1], 2 );
+				assertEquals( args[2], true );
+			});
+			
+			e.invoke( true, ['one', 2, true] );
 		}
 		
 		// dispatching events
@@ -422,35 +487,30 @@ package com.anywebcam.mock
 			assertEquals( 1, invoked );
 		}
 		
-		public function testShouldSetMultipleEventsToInvokeOnInvokingExpectation():void
+		public function testShouldDispatchAllEventsSetOnExpectationWhenInvoked():void
 		{
 			var invoked:int = 0;
 			var target:IEventDispatcher = mock.target as IEventDispatcher;
 			
-			target.addEventListener( 'testEvent', function(e:Event):void { invoked++; } );
-			target.addEventListener( 'testEvent', function(e:Event):void { invoked++; } );
-			target.addEventListener( 'testEvent', function(e:Event):void { invoked++; } );
-			target.addEventListener( 'testEvent', function(e:Event):void { invoked++; } );
-			target.addEventListener( 'testEvent', addAsync( function(e:Event):void
+			target.addEventListener( 'eventOne', function(e:Event):void { invoked++; } );
+			target.addEventListener( 'eventTwo', function(e:Event):void { invoked++; } );
+			target.addEventListener( 'verify', addAsync( function(e:Event):void
 			{
-				assertEquals( 4, invoked );	
-			}, 100, null ) );
+				assertEquals( 2, invoked );
+			}, 100, null ));
 			
-			e.method('test').andDispatchEvent( new Event('testEvent') );
-			e.invoke( true );			
+			e.method('test')
+				.withNoArgs
+				.dispatchesEvent( new Event('eventOne') )
+				.dispatchesEvent( new Event('eventTwo') );
+			
+			// dispatches eventOne, and eventTwo
+			e.invoke( true );
+			
+			// dispatch verify, which calls the function with assertEquals
+			target.dispatchEvent( new Event('verify') );
 		}
-		
-		// ordering
-		public function testShouldSetOrdering():void
-		{
-			fail( 'Ordering not yet tested or implemented' );
-		}
-		
-		public function testShouldVerifyOrdering():void
-		{
-			fail( 'Ordering not yet tested or implemented' );
-		}
-		
+				
 		// verify messages sent
 		// anything we would do here should be done in other test functions anyway
 		/*public function testShouldVerifyIfAllExpectationsAreMet():void

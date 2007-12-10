@@ -11,6 +11,8 @@ package com.anywebcam.mock
 	import flash.events.IEventDispatcher;
 	import flash.utils.setTimeout;
 
+	import com.anywebcam.mock.receiveCountValidator.*;
+
 	use namespace mock_internal;
 
 	/**
@@ -32,17 +34,19 @@ package com.anywebcam.mock
 		private var _argumentExpectation		:ArgumentExpectation;
 
 		// receive counts
-		private var _receiveCountType				:ReceiveCountType;
-		private var _expectedReceivedCount	:int;
 		private var _receivedCount					:int;
+		private var _receiveCountValidators	:Array;
 		
 		// return values
 		private var _valuesToYield					:Array;   
 		private var _errorToThrow						:Error;   
 
 		// functions and events
-		private var _funcsToInvoke					:Array // of Function
-		private var _eventsToDispatch 			:Array // of EventInfo
+		private var _funcsToInvoke					:Array; // of Function
+		private var _eventsToDispatch 			:Array; // of EventInfo
+		
+		// ordering
+		private var _orderNumber						:Number;
 		
 		/**
 		 * Constructor
@@ -55,9 +59,10 @@ package com.anywebcam.mock
 			_hasExpectationType 	= false;
 			_isMethodExpectation 	= false;
 			_propertyName 				= '';
-			_receiveCountType			= ReceiveCountType.ANY;
 			_receivedCount 				= 0;
+			_receiveCountValidators = [];
 			_expectsArguments			= false;
+			_orderNumber					= NaN;
 			
 			_funcsToInvoke 				= [];
 			_eventsToDispatch 		= [];
@@ -96,6 +101,22 @@ package com.anywebcam.mock
 		}
 		
 		/**
+		 * Check if the expectation is eligible to be called again. It is eligible only if all the receive count validators agree, ie that its in the specified range
+		 */
+		mock_internal function eligible():Boolean
+		{
+			return _receiveCountValidators.every( function( validator:ReceiveCountValidator, i:int, a:Array ):Boolean 
+			{ 
+				return validator.eligible( _receivedCount );
+			});
+		}
+
+		mock_internal function receiveCountConstrained():Boolean
+		{
+			return _receiveCountValidators.length > 0;
+		}
+		
+		/**
 		 * Invoke the expectation, checking its called the right way, with the correct arguments, and return any expected value
 		 *
 		 * @throws MockExpectationError if invoked as a method and not a method
@@ -110,6 +131,7 @@ package com.anywebcam.mock
 			{
 				checkInvocationMethod( invokedAsMethod );
 				checkInvocationArgs( args );
+				checkInvocationOrder();
 
 				var retval:* = doInvoke( args );
 				
@@ -159,6 +181,17 @@ package com.anywebcam.mock
 			// todo: add descriptive of which arguments did not match
 			if( _expectsArguments && ! _argumentExpectation.argumentsMatch( args ) )
 				throw new MockExpectationError( 'Invocation arguments do not match expected arguments' );
+		}
+		
+		/**
+		 *
+		 */
+		protected function checkInvocationOrder():void
+		{
+			if( ! isNaN(_orderNumber) ) 
+			{
+				_mock.receiveOrderedExpectation( this, _orderNumber );
+			}
 		}
 		
 		/**
@@ -254,36 +287,16 @@ package com.anywebcam.mock
 		{
 			// todo: add more robust verification
 			
-			// if( !_hasExpectationType ) 
-			// 	throw new MockExpectationError('No Expectation Set');
-			
 			// check if called successfully
 			if( _failedInvocation )
 			{
 				return false;
 			}
 			
-			if( _receiveCountType == ReceiveCountType.ANY )
+			return _receiveCountValidators.every( function( validator:ReceiveCountValidator, i:int, a:Array ):Boolean 
 			{
-				return true;
-			}
-			
-			if( _receiveCountType == ReceiveCountType.AT_LEAST && _receivedCount >= _expectedReceivedCount )
-			{
-				return true;
-			}
-			
-			if( _receiveCountType == ReceiveCountType.AT_MOST && _receivedCount <= _expectedReceivedCount )
-			{
-				return true;
-			}
-			
-			if( _receiveCountType == ReceiveCountType.EXACTLY && _receivedCount == _expectedReceivedCount )
-			{
-				return true;
-			}
-			
-			return false;
+				return validator.validate( _receivedCount );
+			});
 		}
 		
 		/**
@@ -314,9 +327,10 @@ package com.anywebcam.mock
 			if( _hasExpectationType && ! _isMethodExpectation 
 			&& (expectedArguments is Array && (expectedArguments as Array).length > 1 ) )
 				throw new MockExpectationError( 'Property expectation can only accept one argument' );
-
+			
 			_expectsArguments = areArgumentsExpected;
 			_argumentExpectation = new ArgumentExpectation( expectedArguments );
+			
 			return this;
 		}
 		
@@ -327,10 +341,9 @@ package com.anywebcam.mock
 		 * @param number
 		 * @return MockExpectation
 		 */
-		mock_internal function setReceiveCount( type:ReceiveCountType, number:int = 0 ):MockExpectation
+		mock_internal function setReceiveCount( validator:ReceiveCountValidator ):MockExpectation
 		{
-			_receiveCountType = type;
-			_expectedReceivedCount = number;
+			_receiveCountValidators.push( validator );
 			return this;
 		}
 		
@@ -398,9 +411,20 @@ package com.anywebcam.mock
 			return this;
 		}
 		
+		/**
+		 * Set an expectation to be executed in order relative to other ordered expectation
+		 * 
+		 * @return MockExpectation
+		 */
+		mock_internal function setOrderedExpectation():MockExpectation
+		{
+			_orderNumber = _mock.orderExpectation( this );
+			return this;
+		}
+		
 		/// ---- mock expectation setup ---- ///
 		
-		// is expectation for a method or a property?		
+		// is expectation for a method or a property?
 		
 		/**
 		 * Set this expectation to be a method with the supplied name
@@ -522,7 +546,7 @@ package com.anywebcam.mock
 		 */
 		public function get never():MockExpectation
 		{
-			return setReceiveCount( ReceiveCountType.EXACTLY, 0 );
+			return times( 0 );
 		}
 		
 		/**
@@ -530,7 +554,7 @@ package com.anywebcam.mock
 		 */
 		public function get once():MockExpectation
 		{
-			return setReceiveCount( ReceiveCountType.EXACTLY, 1 );			
+			return times( 1 );
 		}
 		
 		/**
@@ -538,7 +562,7 @@ package com.anywebcam.mock
 		 */
 		public function get twice():MockExpectation
 		{
-			return setReceiveCount( ReceiveCountType.EXACTLY, 2 );
+			return times( 2 );
 		}
 		
 		/**
@@ -546,7 +570,7 @@ package com.anywebcam.mock
 		 */
 		public function exactly( count:int ):MockExpectation
 		{
-			return setReceiveCount( ReceiveCountType.EXACTLY, count );
+			return times( count );
 		}
 		
 		/**
@@ -554,7 +578,7 @@ package com.anywebcam.mock
 		 */
 		public function atLeast( count:int ):MockExpectation
 		{
-			return setReceiveCount( ReceiveCountType.AT_LEAST, count );
+			return setReceiveCount( new AtLeastCountValidator( this, count ) );
 		}
 		
 		/**
@@ -562,7 +586,7 @@ package com.anywebcam.mock
 		 */
 		public function atMost( count:int ):MockExpectation
 		{
-			return setReceiveCount( ReceiveCountType.AT_MOST, count );
+			return setReceiveCount( new AtMostCountValidator( this, count ) );
 		}
 		
 		/**
@@ -570,7 +594,15 @@ package com.anywebcam.mock
 		 */
 		public function get anyNumberOfTimes():MockExpectation
 		{
-			return setReceiveCount( ReceiveCountType.ANY );
+			return atLeast( 0 );
+		}
+		
+		/**
+		 * Set this expectation to expect to be called zero or more times
+		 */
+		public function get zeroOrMoreTimes():MockExpectation
+		{
+			return atLeast( 0 );
 		}
 		
 		// todo: allow a range?		
@@ -579,19 +611,16 @@ package com.anywebcam.mock
 		 */
 		public function times( count:int = -1 ):MockExpectation
 		{
-			return setReceiveCount( ReceiveCountType.EXACTLY, count );
+			return count > -1
+				? setReceiveCount( new ExactCountValidator( this, count ) ) 
+				: this;
 		}
 		
 		// method ordering
-		
-		/*
-		public function get ordered():MockExpectation
+		public function ordered():MockExpectation
 		{
-			// todo: this requires talking back up to the Mock
-			
-			return this;
+			return setOrderedExpectation();
 		}
-		*/
 	}
 }
 
@@ -616,27 +645,4 @@ internal class EventInfo
 	public var event:Event;
 	public var delay:Number;
 	public var timeout:Number;
-}
-
-/**
- * Enumeration of ReceiveCountType
- */
-internal class ReceiveCountType
-{
-	public static const ANY				:ReceiveCountType = new ReceiveCountType('ANY');
-	public static const EXACTLY		:ReceiveCountType = new ReceiveCountType('EXACTLY');
-	public static const AT_LEAST	:ReceiveCountType = new ReceiveCountType('AT_LEAST');
-	public static const AT_MOST		:ReceiveCountType = new ReceiveCountType('AT_MOST');
-	
-	public function ReceiveCountType( name:String )
-	{
-		_name = name;
-	}
-	
-	public function toString():String
-	{
-		return _name;
-	}
-	
-	private var _name:String;
 }

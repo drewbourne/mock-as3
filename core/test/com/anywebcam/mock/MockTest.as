@@ -142,14 +142,137 @@ package com.anywebcam.mock
 			assertTrue( mock.verify() );
 		}
 		
-		public function testShouldVerifyOrderedExpectations():void
+		// ordering
+		// fixme: should these ordering tests be moved to the MockTest ?
+		public function testOrderedCallsInOrderWillPass():void
 		{
-			fail( 'Ordering not yet tested or implemented' );
+			var one:MockExpectation = mock.method('one').ordered();
+			var two:MockExpectation = mock.method('two').ordered();
+			
+			mock.one();
+			mock.two();
+			
+			assertTrue( mock.verify() );
 		}
 		
-		public function testShouldVerifyExpectationsOrderedInGroups():void
+		public function testOrderedCallsOutOfOrderWillFail():void
 		{
-			fail( 'Grouped Ordering not yet tested or implemented' );
+			var one:MockExpectation = mock.method('one').ordered();
+			var two:MockExpectation = mock.method('two').ordered();
+			
+			try
+			{
+				mock.two();
+				mock.one();
+				fail( 'Expecting out of order error' );
+			}
+			catch( error:MockExpectationError )
+			{
+				// todo: check the right error was thrown
+				assertFalse( mock.verify() );
+			}
+		}
+		
+		public function testOrderedCallsToSameMethodWillPass():void
+		{
+			var oneCalledCount:int = 0;
+			var twoCalledCount:int = 0;
+			var threeCalledCount:int = 0;
+			
+			var one:MockExpectation 	= mock.method('testingOrdering')
+				.once.ordered().calls( function():void { oneCalledCount++ } );
+				
+			var two:MockExpectation 	= mock.method('testingOrdering')
+				.twice.ordered().calls( function():void { twoCalledCount++ } );
+				
+			var three:MockExpectation = mock.method('testingOrdering')
+				.ordered().calls( function():void { threeCalledCount++ } );
+			
+			mock.testingOrdering(); // first expectation
+			mock.testingOrdering(); // second expectation
+			mock.testingOrdering(); // second expectation
+			
+			for( var i:int = 0, n:int = 20; i < n; i++ )
+				mock.testingOrdering(); // third expectation
+			
+			assertEquals( 1, oneCalledCount );
+			assertEquals( 2, twoCalledCount );
+			assertEquals( 20, threeCalledCount );
+			
+			assertTrue( mock.verify() );
+		}
+
+		/*
+			This test case is a bit awkward
+		 */
+		public function testOrderedCallsToSameMethodWithSameArgsDispatchesDifferentEvents():void
+		{
+			mock = new Mock( new EventDispatcher() );
+			
+			var eventSequence:Array = [];
+			
+			// good old FlexUnit::TestCase::addAsync, only one per testcase
+			mock.target.addEventListener( 'done', addAsync( function(e:Event):void
+			{
+				// assert the data we stored about the event sequence is correct
+				eventSequence.forEach( function( e:int, i:int, a:Array ):void
+				{
+					assertEquals( i, e );
+				});
+				
+				assertTrue( mock.verify() );
+			}, 100, null));
+			
+			// add method to dispatch done event
+			mock.method('done').dispatchesEvent( new Event( 'done' ) );
+			
+			// add listener for the event we are actually interested in
+			mock.target.addEventListener( 'example', function(e:Event):void
+			{
+				eventSequence.push( (e as ExampleEvent).data.id );
+			});
+			
+			// setup five versions of callMethod to dispatch the different events
+			for( var i:int = 0, n:int = 5; i < n; i++ )
+			{
+				var token:Object = { id: i };
+				var metaData:Object = { id: i };
+				var event:ExampleEvent = new ExampleEvent( 'example', metaData );
+				
+				// add mocked method 
+				// note use of once & ordered() as they are what makes this example work
+				mock.method('callMethod').withArgs( 'getMetaData' )
+					.dispatchesEvent( event ).returns( token )
+					.once.ordered();
+			}
+			
+			// invoke callMethod 5 times, checking we get the right return value: a token with an id
+			for( var j:int = 0, m:int = 5; j < m; j++ )
+			{
+				token = mock.callMethod( 'getMetaData' );
+				assertEquals( j, token.id );
+			}
+			
+			// dispatch the done event so our addAsync listener gets called
+			mock.done();
 		}
 	}
+}
+
+import flash.events.*;
+
+internal class ExampleEvent extends Event
+{
+	public function ExampleEvent( type:String, data:Object )
+	{
+		super( type );
+		this.data = data;
+	}
+	
+	override public function clone():Event
+	{
+		return new ExampleEvent( type, data );
+	}
+	
+	public var data:Object;
 }

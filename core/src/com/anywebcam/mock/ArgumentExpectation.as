@@ -37,6 +37,11 @@ package com.anywebcam.mock
 				_expectedArguments = convertArgConstraints( args as Array ); 
 			}
 		}
+		
+		public function toString():String
+		{
+			return '[ArgumentExpectation '+ expectedArguments +']'
+		}
 
 		private var _expectedArguments:Array;
 		
