@@ -20,5 +20,10 @@ package com.anywebcam.mock.argumentConstraint
 		{
 			return ( _value === value );
 		}
+		
+		public function toString():String
+		{
+			return '[LiteralArg '+ _value +']';
+		}
 	}
 }

@@ -25,5 +25,10 @@ package com.anywebcam.mock.argumentConstraint
 			
 			return (value is _type);
 		}
+		
+		public function toString():String
+		{
+			return '[ClassArg '+ _type +']'
+		}
 	}
 }

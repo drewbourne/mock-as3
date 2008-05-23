@@ -79,12 +79,7 @@ package com.anywebcam.mock
 				case Number: 		return new NumberArgumentConstraint( constraint );
 				case Boolean: 	return new BooleanArgumentConstraint( constraint );
 				case String: 		return new StringArgumentConstraint( constraint );
-			}
-			
-			// class
-			if( constraint is Class )
-			{
-				return new ClassArgumentConstraint( constraint as Class );
+				//case Function: 	return new FunctionArgumentConstraint( null );
 			}
 			
 			// function
@@ -92,6 +87,12 @@ package com.anywebcam.mock
 			{
 				return new FunctionArgumentConstraint( constraint as Function );
 			}
+			
+			// class
+			if( constraint is Class )
+			{
+				return new ClassArgumentConstraint( constraint as Class );
+			}			
 			
 			// regexp
 			if( constraint is RegExp )

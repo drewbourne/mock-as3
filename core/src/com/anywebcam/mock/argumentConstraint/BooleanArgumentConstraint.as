@@ -17,5 +17,10 @@ package com.anywebcam.mock.argumentConstraint
 		{
 			return ( value is Boolean );
 		}
+		
+		public function toString():String
+		{
+			return '[BooleanArg]'
+		}
 	}
 }

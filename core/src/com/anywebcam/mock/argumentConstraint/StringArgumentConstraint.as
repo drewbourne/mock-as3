@@ -17,5 +17,10 @@ package com.anywebcam.mock.argumentConstraint
 		{
 			return ( value is String );
 		}
+		
+		public function toString():String
+		{
+			return '[StringArg]'
+		}
 	}
 }

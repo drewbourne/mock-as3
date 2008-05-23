@@ -18,13 +18,22 @@ package com.anywebcam.mock.argumentConstraint
 
 		public function matches( value:Object ):Boolean
 		{
+			//trace( this, _func, value, value is Function );
+
 			if( value is Function )
 			{
-				return ( (value as Function) === _func );
+				if( _func != null )
+					return ( (value as Function) === _func );
+					
+				return true;
 			}
 			
-			// todo: should we catch errors here?
 			return _func.apply( null, [value] );
+		}
+		
+		public function toString():String
+		{
+			return '[FunctionArg '+ _func +']'
 		}
 	}
 }

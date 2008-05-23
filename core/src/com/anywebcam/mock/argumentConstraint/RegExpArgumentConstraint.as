@@ -28,5 +28,10 @@ package com.anywebcam.mock.argumentConstraint
 			}
 			return _regexp.test( value as String );
 		}
+		
+		public function toString():String
+		{
+			return '[RegExpArg '+ _regexp.toString() +']';
+		}
 	}
 }

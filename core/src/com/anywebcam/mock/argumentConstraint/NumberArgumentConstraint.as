@@ -17,5 +17,10 @@ package com.anywebcam.mock.argumentConstraint
 		{
 			return ( value is Number || value is int || value is uint );
 		}
+		
+		public function toString():String
+		{
+			return '[NumberArg]';
+		}
 	}
 }

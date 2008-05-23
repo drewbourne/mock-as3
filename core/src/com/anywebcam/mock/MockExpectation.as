@@ -15,6 +15,9 @@ package com.anywebcam.mock
 
 	use namespace mock_internal;
 
+	// todo: should default to receive count at least 1
+	// todo: should remove default receive count on setting a receive count manually
+	
 	/**
 	 * Manages expectations of method or property call(s)
 	 */
@@ -47,7 +50,7 @@ package com.anywebcam.mock
 		
 		// ordering
 		private var _orderNumber						:Number;
-		
+
 		/**
 		 * Constructor
 		 * 
@@ -229,12 +232,12 @@ package com.anywebcam.mock
 
 			_funcsToInvoke.forEach( function( func:Function, i:int, a:Array ):void 
 			{ 
-				func( args ); 
+				func.apply( null, args );
 			});
 		}
 		
 		/**
-		 * Dispatch any evernts set on this expectation
+		 * Dispatch any events set on this expectation
 		 * 
 		 * @param args Any arguments supplied when calling this expectation		
 		 */
@@ -293,10 +296,20 @@ package com.anywebcam.mock
 				return false;
 			}
 			
-			return _receiveCountValidators.every( function( validator:ReceiveCountValidator, i:int, a:Array ):Boolean 
+			var validReceiveCount:Boolean = _receiveCountValidators.every( function( validator:ReceiveCountValidator, i:int, a:Array ):Boolean 
 			{
 				return validator.validate( _receivedCount );
 			});
+			
+			// todo: add the expected arguments to the error message
+			
+			if( !validReceiveCount )
+				throw new MockExpectationError( 
+					  _mock.toString() +'/'+ name + '() expectation not met.' 
+					+ (_expectsArguments ? _argumentExpectation.toString() : '') 
+					);
+			
+			return validReceiveCount;
 		}
 		
 		/**

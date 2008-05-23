@@ -54,6 +54,21 @@ package com.anywebcam.mock
 		{
 			_ignoreMissing = value;
 		}
+				
+		private var _traceMissing:Boolean
+		
+		/**
+		 *
+		 */
+		public function get traceMissing():Boolean
+		{
+			return _traceMissing;
+		}
+
+		public function set traceMissing( value:Boolean ):void
+		{
+			_traceMissing = value;
+		}
 
 		private var _expectations:Array; //  of MockExpectation;
 		
@@ -85,8 +100,8 @@ package com.anywebcam.mock
 		 */
 		public function toString():String
 		{
-			var className:String = getQualifiedClassName( this );			
-			return '[Mock '+ className.slice( className.lastIndexOf(':')+1) +']';
+			var className:String = getQualifiedClassName( target );	
+			return className.slice( className.lastIndexOf(':')+1);
 		}
 
 		/**
@@ -130,9 +145,12 @@ package com.anywebcam.mock
 		 */
 		public function verify():Boolean
 		{
-			// todo: throw MockExpectationError if verifyThrowsError is true
+			var expectationsAllVerified:Boolean = _expectations.every( verifyExpectation );
 			
-			return _expectations.every( verifyExpectation );
+			if( ! expectationsAllVerified )
+				throw new MockExpectationError( 'Verifying Mock Failed:' + this.toString() );
+
+			return expectationsAllVerified;
 		}
 		
 		/**
@@ -185,8 +203,11 @@ package com.anywebcam.mock
 				}
 			}
 			
+			if( traceMissing )
+				trace( this, 'missing:', propertyName, args );
+			
 			if( ! ignoreMissing )
-				throw new MockExpectationError( 'No Expectation set for '+ propertyName + ' with args:' + args );
+				throw new MockExpectationError( 'No Expectation set for '+ propertyName + ' with args:' + args	 );
 			
 			return null;
 		}

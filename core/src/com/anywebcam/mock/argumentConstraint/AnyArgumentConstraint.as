@@ -17,5 +17,10 @@ package com.anywebcam.mock.argumentConstraint
 		{
 			return true;
 		}
+		
+		public function toString():String
+		{
+			return '[AnyArg]';
+		}
 	}
 }
