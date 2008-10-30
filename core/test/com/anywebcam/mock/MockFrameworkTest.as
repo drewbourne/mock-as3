@@ -18,6 +18,7 @@ package com.anywebcam.mock
 			ts.addTest( ArgumentExpectationTest.suite() );
 			ts.addTest( MockExpectationTest.suite() );
 			ts.addTest( MockTest.suite() );
+			ts.addTest( Examples.suite() );
 			
 			return ts;
 		}

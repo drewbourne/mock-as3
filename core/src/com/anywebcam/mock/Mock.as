@@ -232,7 +232,7 @@ package com.anywebcam.mock
 		{
 			if( orderNumber < _currentOrderNumber )
 			{
-				throw new MockExpectationError( 'Called out '+ expectation.name +' of order. Expected order '+ orderNumber +' was '+ _currentOrderNumber );
+				throw new MockExpectationError( 'Called '+ expectation.name +' out of order. Expected order '+ orderNumber +' was '+ _currentOrderNumber );
 			}
 			
 			_currentOrderNumber = orderNumber;

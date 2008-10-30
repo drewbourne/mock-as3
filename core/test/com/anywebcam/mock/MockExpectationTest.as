@@ -68,7 +68,8 @@ package com.anywebcam.mock
 			}
 			catch( error:MockExpectationError )
 			{
-				assertFalse( e.verifyMessageReceived() );
+				try { e.verifyMessageReceived(); fail('Expecting MockExpectationError'); } 
+				catch (error:MockExpectationError) { ;/* NOOP */ }
 			}
 		}
 		
@@ -91,7 +92,8 @@ package com.anywebcam.mock
 			}
 			catch( error:MockExpectationError )
 			{
-				assertFalse( e.verifyMessageReceived() );
+				try { e.verifyMessageReceived(); fail('Expecting MockExpectationError'); } 
+				catch (error:MockExpectationError) { ;/* NOOP */ }
 			}
 		}
 
@@ -136,7 +138,8 @@ package com.anywebcam.mock
 			}
 			catch( error:MockExpectationError )
 			{
-				assertFalse( e.verifyMessageReceived() );	
+				try { e.verifyMessageReceived(); fail('Expecting MockExpectationError'); } 
+				catch (error:MockExpectationError) { ;/* NOOP */ }
 			}
 		}
 		
@@ -157,7 +160,8 @@ package com.anywebcam.mock
 			}
 			catch( error:MockExpectationError )
 			{
-				assertFalse(e.verifyMessageReceived() );
+				try { e.verifyMessageReceived(); fail('Expecting MockExpectationError'); } 
+				catch (error:MockExpectationError) { ;/* NOOP */ }
 			}
 		}
 		
@@ -195,7 +199,8 @@ package com.anywebcam.mock
 			}
 			catch( error:MockExpectationError )
 			{
-				assertFalse( e.verifyMessageReceived() );
+				try { e.verifyMessageReceived(); fail('Expecting MockExpectationError'); } 
+				catch (error:MockExpectationError) { ;/* NOOP */ }
 			}
 		}
 		
@@ -223,7 +228,8 @@ package com.anywebcam.mock
 			}
 			catch( error:MockExpectationError )
 			{
-				assertFalse( e.verifyMessageReceived() );
+				try { e.verifyMessageReceived(); fail('Expecting MockExpectationError'); } 
+				catch (error:MockExpectationError) { ;/* NOOP */ }
 			}
 		}
 		
@@ -325,7 +331,15 @@ package com.anywebcam.mock
 		{
 			e.method('test').never;
 			e.invoke( true );
-			assertFalse( e.verifyMessageReceived() );
+			try
+			{
+				e.verifyMessageReceived();
+				fail('Expecting MockExpectation#verifyMessageReceived to throw a MockExpectationError');
+			}
+			catch( error:MockExpectationError )
+			{
+				; // NOOP
+			}
 		}
 		
 		// invoke exactly
@@ -344,7 +358,15 @@ package com.anywebcam.mock
 			e.invoke( true );
 			e.invoke( true );
 			e.invoke( true );
-			assertFalse( e.verifyMessageReceived() );
+			try 
+			{
+				e.verifyMessageReceived();
+				fail('Expecting MockExpectation#verifyMessageReceived to throw a MockExpectationError');
+			}
+			catch( error:MockExpectationError ) 
+			{
+				; // NOOP
+			}
 		}
 		
 		// invoked less than, and more than
@@ -353,10 +375,12 @@ package com.anywebcam.mock
 			e.method('test').atLeast( 3 );
 			
 			e.invoke( true );
-			assertFalse( e.verifyMessageReceived() );
+			try { e.verifyMessageReceived(); fail('Expecting MockExpectationError'); } 
+			catch (error:MockExpectationError) { ;/* NOOP */ }
 			
 			e.invoke( true );
-			assertFalse( e.verifyMessageReceived() );
+			try { e.verifyMessageReceived(); fail('Expecting MockExpectationError'); } 
+			catch (error:MockExpectationError) { ;/* NOOP */ }
 			
 			e.invoke( true );
 			assertTrue( e.verifyMessageReceived() );
@@ -377,10 +401,12 @@ package com.anywebcam.mock
 			assertTrue( e.verifyMessageReceived() );
 			
 			e.invoke( true );
-			assertFalse( e.verifyMessageReceived() );
+			try { e.verifyMessageReceived(); fail('Expecting MockExpectationError'); } 
+			catch (error:MockExpectationError) { ;/* NOOP */ }
 
 			e.invoke( true );
-			assertFalse( e.verifyMessageReceived() );
+			try { e.verifyMessageReceived(); fail('Expecting MockExpectationError'); } 
+			catch (error:MockExpectationError) { ;/* NOOP */ }
 		}
 		
 		// at least, at most, at least & at most
@@ -389,7 +415,8 @@ package com.anywebcam.mock
 			e.method('test').atLeast( 2 ).atMost( 3 );
 			
 			e.invoke( true );
-			assertFalse( e.verifyMessageReceived() );
+			try { e.verifyMessageReceived(); fail('Expecting MockExpectationError'); } 
+			catch (error:MockExpectationError) { ;/* NOOP */ }
 
 			e.invoke( true );
 			assertTrue( e.verifyMessageReceived() );
@@ -398,7 +425,8 @@ package com.anywebcam.mock
 			assertTrue( e.verifyMessageReceived() );
 
 			e.invoke( true );
-			assertFalse( e.verifyMessageReceived() );
+			try { e.verifyMessageReceived(); fail('Expecting MockExpectationError'); } 
+			catch (error:MockExpectationError) { ;/* NOOP */ }
 		}
 		
 		// receive counts only apply to matching args
@@ -431,7 +459,16 @@ package com.anywebcam.mock
 			{
 				mock.hi(3);
 			}
-			assertFalse( mock.verify() );
+			
+			try 
+			{
+				mock.verify();
+				fail('Expecting MockExpectationError for receiveCount not met for mock.method("hi").withArgs(2).twice');
+			}
+			catch (error:MockExpectationError) 
+			{
+				; // NOOP
+			}
 		}
 		
 		// invoking functions
@@ -462,12 +499,12 @@ package com.anywebcam.mock
 		
 		public function testFunctionsToCallShouldReceiveArgsFromInvoke():void
 		{
-			e.method('test').withAnyArgs.calls( function(args:Array=null):void 
+			e.method('test').withAnyArgs.calls( function(...rest):void 
 			{  
-				assertEquals( 3, args.length );
-				assertEquals( args[0], 'one' );
-				assertEquals( args[1], 2 );
-				assertEquals( args[2], true );
+				assertEquals( 3, rest.length );
+				assertEquals( rest[0], 'one' );
+				assertEquals( rest[1], 2 );
+				assertEquals( rest[2], true );
 			});
 			
 			e.invoke( true, ['one', 2, true] );

@@ -52,6 +52,33 @@ package com.anywebcam.mock
 			mock.unicorn;
 			mock.unicorn = 'horse with a horn';
 		}
+		
+		public function testMetExpectationsShouldPassWhenIgnoreMissingIsTrue():void 
+		{
+			mock.ignoreMissing = true;
+			mock.method('pass').twice;
+			
+			mock.pass();
+			mock.pass();
+			
+			mock.verify();
+		}
+		
+		public function testUnmetExpectationsShouldFailWhenIgnoreMissingIsTrue():void
+		{
+			mock.ignoreMissing = true;
+			mock.method('toast').twice;
+			
+			try 
+			{
+				mock.verify();
+				fail( 'Expecting Mock to throw an error about unmet expectations' );
+			} 
+			catch( error:MockExpectationError) 
+			{
+				; // NOOP
+			}
+		}
 
 		public function testShouldComplainOnMissingMethod():void
 		{
@@ -169,7 +196,14 @@ package com.anywebcam.mock
 			catch( error:MockExpectationError )
 			{
 				// todo: check the right error was thrown
-				assertFalse( mock.verify() );
+				try 
+				{
+					mock.verify();
+				}
+				catch( error:MockExpectationError )
+				{
+					; // NOOP
+				}
 			}
 		}
 		

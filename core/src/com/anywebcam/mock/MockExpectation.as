@@ -135,7 +135,7 @@ package com.anywebcam.mock
 				checkInvocationMethod( invokedAsMethod );
 				checkInvocationArgs( args );
 				checkInvocationOrder();
-
+				
 				var retval:* = doInvoke( args );
 				
 				return retval;
@@ -187,7 +187,7 @@ package com.anywebcam.mock
 		}
 		
 		/**
-		 *
+		 * Checks the Order Number is set and that the Mock is expecting this call
 		 */
 		protected function checkInvocationOrder():void
 		{
@@ -284,7 +284,7 @@ package com.anywebcam.mock
 		/**
 		 * Verify this expectation has had it's expectations
 		 *
-		 * @return True if this expecation is fulfilled, False otherwise
+		 * @return true if this expecation is fulfilled, false otherwise
 		 */
 		public function verifyMessageReceived():Boolean
 		{
@@ -293,6 +293,7 @@ package com.anywebcam.mock
 			// check if called successfully
 			if( _failedInvocation )
 			{
+				throw new MockExpectationError(_mock.toString() + '/' + name + '() failed on invocation.');
 				return false;
 			}
 			
@@ -337,6 +338,7 @@ package com.anywebcam.mock
 		 */
 		mock_internal function setArgumentExpectation( areArgumentsExpected:Boolean, expectedArguments:Object = null ):MockExpectation
 		{
+		  // FIXME add additional error detail to the MockExpectationError, like which property, what args, which mock instance, etc
 			if( _hasExpectationType && ! _isMethodExpectation 
 			&& (expectedArguments is Array && (expectedArguments as Array).length > 1 ) )
 				throw new MockExpectationError( 'Property expectation can only accept one argument' );
@@ -376,7 +378,7 @@ package com.anywebcam.mock
 			{
 				// clear error to throw, otherwise return does not work
 				_errorToThrow = null;
-				_valuesToYield = rest;				
+				_valuesToYield = rest;
 			}
 			
 			return this;
