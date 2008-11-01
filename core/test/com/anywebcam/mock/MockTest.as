@@ -290,6 +290,29 @@ package com.anywebcam.mock
 			// dispatch the done event so our addAsync listener gets called
 			mock.done();
 		}
+		
+		public function testMockVerifyAggregatesFailedExpectations():void
+		{
+			mock = new Mock( new EventDispatcher() );
+			mock.method('one').withArgs('one').once;
+			mock.method('two').withArgs(2).once;
+			mock.method('three').withArgs(true).once;
+			
+			try
+			{
+				mock.verify();
+				fail('Expecting MockExpectationError');
+			}
+			catch( error:MockExpectationError )
+			{
+				assertEquals(
+					'Verifying Mock Failed: EventDispatcher\n'
+					+ 'Unmet Expectation: EventDispatcher.one("one") received: 0, expected: 1 (-1)\n'
+					+ 'Unmet Expectation: EventDispatcher.two(2) received: 0, expected: 1 (-1)\n'
+					+ 'Unmet Expectation: EventDispatcher.three(true) received: 0, expected: 1 (-1)',
+					error.message);
+			}
+		}
 	}
 }
 

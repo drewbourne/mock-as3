@@ -23,7 +23,22 @@ package com.anywebcam.mock.argumentConstraint
 		
 		public function toString():String
 		{
-			return '[LiteralArg '+ _value +']';
+			var result:String = "";
+			
+			if (_value is String) 
+			{
+				result = '"' + _value + '"';
+			} 
+			else if (_value && _value.hasOwnProperty('toString') ) 
+			{
+				result = _value.toString();
+			} 
+			else 
+			{
+				result = String(_value);
+			}
+			
+			return result;
 		}
 	}
 }

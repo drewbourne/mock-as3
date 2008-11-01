@@ -40,6 +40,14 @@ package com.anywebcam.mock
 			return _target;
 		}
 		
+		/**
+		 * The Class of the target
+		 */
+		public function get targetClass():Class
+		{
+			return null;
+		}
+		
 		private var _ignoreMissing:Boolean;
 
 		/**
@@ -100,8 +108,8 @@ package com.anywebcam.mock
 		 */
 		public function toString():String
 		{
-			var className:String = getQualifiedClassName( target );	
-			return className.slice( className.lastIndexOf(':')+1);
+			var className:String = getQualifiedClassName( target );
+			return className.slice( className.lastIndexOf(':') + 1 );
 		}
 
 		/**
@@ -141,14 +149,23 @@ package com.anywebcam.mock
 		/**
 		 * Verify all the expectations have been met
 		 * 
-		 * @return True if all expectations are met, False if not
+		 * @return True if all expectations are met
+		 * @throws MockExpectationError with results of failed expectations
 		 */
 		public function verify():Boolean
 		{
-			var expectationsAllVerified:Boolean = _expectations.every( verifyExpectation );
+			var failedExpectations:Array = _expectations.map( verifyExpectation ).filter( isNotNull );
+			var expectationsAllVerified:Boolean = failedExpectations.length == 0;
 			
-			if( ! expectationsAllVerified )
-				throw new MockExpectationError( 'Verifying Mock Failed:' + this.toString() );
+			trace('verify:', failedExpectations, expectationsAllVerified);
+			
+			if( !expectationsAllVerified )
+				throw new MockExpectationError( 
+					'Verifying Mock Failed: ' 
+					+ this.toString() + '\n' 
+					+ failedExpectations.map(function(error:MockExpectationError, i:int, a:Array):String {
+							return error.message;
+						}).join('\n') );
 
 			return expectationsAllVerified;
 		}
@@ -160,9 +177,32 @@ package com.anywebcam.mock
 		 * @param index The index of the expectation
 		 * @param array The Expectations Array
 		 */
-		protected function verifyExpectation( expectation:MockExpectation, index:int, array:Array ):Boolean
+		protected function verifyExpectation( expectation:MockExpectation, index:int, array:Array ):MockExpectationError
 		{
-			return expectation.verifyMessageReceived();
+			var result:MockExpectationError = null;
+			
+			try
+			{
+				expectation.verifyMessageReceived();
+			}
+			catch( error:MockExpectationError )
+			{
+				result = error;
+			}
+			finally
+			{
+				return result;
+			}
+		}
+		
+		/**
+		 *	Iterator function for filtering nulls from an array
+		 *	
+		 *	@private
+		 */
+		protected function isNotNull( object:*, index:int, array:Array ):Boolean
+		{
+			return object != null;
 		}
 		
 		/**

@@ -20,7 +20,7 @@ package com.anywebcam.mock.argumentConstraint
 		
 		public function toString():String
 		{
-			return '[BooleanArg]'
+			return 'Boolean';
 		}
 	}
 }

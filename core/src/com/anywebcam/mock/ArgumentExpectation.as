@@ -40,7 +40,8 @@ package com.anywebcam.mock
 		
 		public function toString():String
 		{
-			return '[ArgumentExpectation '+ expectedArguments +']'
+			//return '[ArgumentExpectation '+ expectedArguments +']';
+			return (expectedArguments || []).join(', ');
 		}
 
 		private var _expectedArguments:Array;

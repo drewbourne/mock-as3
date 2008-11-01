@@ -554,5 +554,31 @@ package com.anywebcam.mock
 		{
 			fail();
 		}*/
+		
+		public function testUnmetReceiveCountExpectationsShouldHaveNiceErrorMessages():void {
+			
+			//e.method('test').withArgs(Boolean, Mock, function():void {}, "one", true, false, 3, Number, RegExp, /\d+/, String).once;
+			e.method('test').withArgs("one", 2, true).atLeast(1).atMost(2);
+			
+			e.invoke(true, ["one", 2, true]);
+			e.invoke(true, ["one", 2, true]);
+			e.invoke(true, ["one", 2, true]);
+			
+			try 
+			{
+				e.verifyMessageReceived();
+				fail('Expecting an UnmetMockExpectationError to be thrown');
+			}
+			catch( error:MockExpectationError ) 
+			{
+				assertEquals(
+					'Unmet Expectation: EventDispatcher.test("one", 2, true) received: 3, expected: atLeast: 1 (+2), atMost: 2 (+1)',
+					error.message);
+			}
+		}
+		
+		public function testFailedInvocationShouldHaveNicErrorMessages():void {
+			
+		}
 	}
 }

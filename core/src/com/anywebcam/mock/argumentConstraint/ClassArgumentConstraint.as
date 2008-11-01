@@ -7,6 +7,8 @@
 */
 package com.anywebcam.mock.argumentConstraint
 {
+	import flash.utils.getQualifiedClassName;
+
 	public class ClassArgumentConstraint implements ArgumentConstraint
 	{
 		private var _type:Class;
@@ -28,7 +30,8 @@ package com.anywebcam.mock.argumentConstraint
 		
 		public function toString():String
 		{
-			return '[ClassArg '+ _type +']'
+			var className:String = getQualifiedClassName( _type );
+			return className.slice( className.lastIndexOf(':') + 1 );
 		}
 	}
 }

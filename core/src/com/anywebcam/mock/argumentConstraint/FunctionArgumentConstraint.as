@@ -33,7 +33,9 @@ package com.anywebcam.mock.argumentConstraint
 		
 		public function toString():String
 		{
-			return '[FunctionArg '+ _func +']'
+			// return '[FunctionArg '+ _func +']';
+			// return String(_func);
+			return 'Function';
 		}
 	}
 }

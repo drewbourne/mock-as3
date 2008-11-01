@@ -4,5 +4,6 @@ package com.anywebcam.mock.receiveCountValidator
 	{
 		function eligible( n:int ):Boolean;
 		function validate( n:int ):Boolean;
+		function toString( n:int ):String;
 	}
 }

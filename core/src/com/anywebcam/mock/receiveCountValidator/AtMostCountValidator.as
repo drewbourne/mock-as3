@@ -22,5 +22,12 @@ package com.anywebcam.mock.receiveCountValidator
 		{
 			return n <= limit;
 		}
+		
+		public function toString( n:int ):String 
+		{
+			var diff:int = (n - limit);
+			var difference:String = ' (' + (diff > 0 ? '+' : '' ) + diff + ')';
+			return 'atMost: ' + limit + difference;
+		}
 	}
 }

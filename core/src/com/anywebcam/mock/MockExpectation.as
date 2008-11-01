@@ -71,6 +71,16 @@ package com.anywebcam.mock
 			_eventsToDispatch 		= [];
 		}
 		
+		public function toString():String 
+		{
+ 			var result:String = _mock.toString() + '.' + name
+					+ (_isMethodExpectation 
+						? '(' + (_expectsArguments ? _argumentExpectation.toString() : '') + ')' 
+						: '');
+						
+			return result;
+		}
+		
 		// properties
 		
 		/**
@@ -160,10 +170,10 @@ package com.anywebcam.mock
 		protected function checkInvocationMethod( invokedAsMethod:Boolean ):void
 		{
 			if( _isMethodExpectation && ! invokedAsMethod )
-				throw new MockExpectationError( 'Expectation is for a property not a method' );
+				throw new MockExpectationError( 'Expectation is for a property not a method:' + this );
 			
 			if( ! _isMethodExpectation && invokedAsMethod )
-				throw new MockExpectationError( 'Expectation is for a method not a property' );
+				throw new MockExpectationError( 'Expectation is for a method not a property:' + this );
 		}
 		
 		/**
@@ -176,14 +186,14 @@ package com.anywebcam.mock
 		protected function checkInvocationArgs( args:Array = null ):void
 		{
 			if( ! _isMethodExpectation && args != null && args.length > 1 )
-				throw new MockExpectationError( 'Property expectations cannot accept multiple arguments, received:'+ args );
+				throw new MockExpectationError( 'Property expectations cannot accept multiple arguments: ' + this + ', received:'+ args );
 
 			if( ! _expectsArguments && args != null && args.length > 0 )
-				throw new MockExpectationError( 'Not expecting arguments, received:'+ args );
+				throw new MockExpectationError( 'Not expecting arguments: ' + this + ', received:'+ args );
 
 			// todo: add descriptive of which arguments did not match
 			if( _expectsArguments && ! _argumentExpectation.argumentsMatch( args ) )
-				throw new MockExpectationError( 'Invocation arguments do not match expected arguments' );
+				throw new MockExpectationError( 'Invocation arguments do not match expected arguments:' + this + ', received:'+ args  );
 		}
 		
 		/**
@@ -284,7 +294,8 @@ package com.anywebcam.mock
 		/**
 		 * Verify this expectation has had it's expectations
 		 *
-		 * @return true if this expecation is fulfilled, false otherwise
+		 * @return true if this expecation is fulfilled
+		 * @throws MockExpectationError if the set expectations were not met
 		 */
 		public function verifyMessageReceived():Boolean
 		{
@@ -293,6 +304,7 @@ package com.anywebcam.mock
 			// check if called successfully
 			if( _failedInvocation )
 			{
+				// FIXME report the error that caused the invocation to fail
 				throw new MockExpectationError(_mock.toString() + '/' + name + '() failed on invocation.');
 				return false;
 			}
@@ -302,13 +314,22 @@ package com.anywebcam.mock
 				return validator.validate( _receivedCount );
 			});
 			
+			var expectedReceivedCounts:Array = _receiveCountValidators.map( function( validator:ReceiveCountValidator, i:int, a:Array ):String 
+			{
+				return validator.toString( _receivedCount );
+			});
+			
 			// todo: add the expected arguments to the error message
 			
-			if( !validReceiveCount )
-				throw new MockExpectationError( 
-					  _mock.toString() +'/'+ name + '() expectation not met.' 
-					+ (_expectsArguments ? _argumentExpectation.toString() : '') 
-					);
+			if( !validReceiveCount ) 
+			{
+				var message:String = 'Unmet Expectation: ' 
+						+ toString()
+						+ ' received: ' + _receivedCount + ','
+						+ ' expected: ' + expectedReceivedCounts.join(', ');
+						
+				throw new MockExpectationError(message);
+			}
 			
 			return validReceiveCount;
 		}
@@ -341,7 +362,7 @@ package com.anywebcam.mock
 		  // FIXME add additional error detail to the MockExpectationError, like which property, what args, which mock instance, etc
 			if( _hasExpectationType && ! _isMethodExpectation 
 			&& (expectedArguments is Array && (expectedArguments as Array).length > 1 ) )
-				throw new MockExpectationError( 'Property expectation can only accept one argument' );
+				throw new MockExpectationError( toString() + ', Property expectation can only accept one argument' );
 			
 			_expectsArguments = areArgumentsExpected;
 			_argumentExpectation = new ArgumentExpectation( expectedArguments );
