@@ -145,13 +145,20 @@ package com.anywebcam.mock
 		
 		public function testCallThroughs():void
 		{
-			var e:MockExample = new MockExample( true );
+			var e:MockExample = new MockExample( false );
 			e.mock.method( 'justCall' ).withNoArgs.never;
 
 			var c:SomeComponent = new SomeComponent( e );
-			c.justCallExample();
-
-			e.mock.verify();
+			
+			try 
+			{
+				c.justCallExample();
+				fail('Expecing MockExpectationError for never method expectation');
+			}
+			catch (error:MockExpectationError) 
+			{
+				; // NOOP
+			}
 		}
 
 		public function testCallWithRest():void

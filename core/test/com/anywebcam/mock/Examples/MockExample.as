@@ -4,7 +4,7 @@ package com.anywebcam.mock.examples
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 
-	public class MockExample extends EventDispatcher implements Example
+	public class MockExample implements Example
 	{
 		public var mock:Mock;
 
@@ -46,7 +46,7 @@ package com.anywebcam.mock.examples
 			mock.dispatchMyEvent();
 		}
 		
-		/*public function addEventListener(type:String, listener:Function, useCapture:Boolean=false, priority:int=0, useWeakReference:Boolean=false):void
+		public function addEventListener(type:String, listener:Function, useCapture:Boolean=false, priority:int=0, useWeakReference:Boolean=false):void
 		{
 			mock.addEventListener(type, listener, useCapture, priority, useWeakReference);
 		}
@@ -69,6 +69,6 @@ package com.anywebcam.mock.examples
 		public function willTrigger(type:String):Boolean
 		{
 			return mock.willTrigger(type);
-		}*/
+		}
 	}
 }

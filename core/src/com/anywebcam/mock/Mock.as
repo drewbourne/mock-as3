@@ -7,6 +7,9 @@
 */
 package com.anywebcam.mock
 {
+	import flash.events.Event;
+	import flash.events.EventDispatcher;
+	import flash.events.IEventDispatcher;
 	import flash.utils.getQualifiedClassName;
 	import flash.utils.Proxy;
 	import flash.utils.flash_proxy;
@@ -19,7 +22,7 @@ package com.anywebcam.mock
 	 * @param target The Object to mock
 	 * @param ignoreMissing Indicates whether methods and properties without expectations are ignored
 	 */
-	dynamic public class Mock extends Proxy
+	dynamic public class Mock extends Proxy implements IEventDispatcher
 	{
 		public function Mock( target:Object=null, ignoreMissing:Boolean = false )
 		{
@@ -28,7 +31,10 @@ package com.anywebcam.mock
 			_ignoreMissing = ignoreMissing || false;
 			_currentOrderNumber = 0;
 			_orderedExpectations = [];
+			_eventDispatcher = new EventDispatcher(this);
 		}
+		
+		private var _eventDispatcher:IEventDispatcher;
 
 		private var _target:Object;
 		
@@ -243,10 +249,10 @@ package com.anywebcam.mock
 		/**
 		 * Find a matching expectation
 		 *
-		 * @param propertyName The peroperty or method name to find an expectaton for
+		 * @param propertyName The property or method name to find an expectaton for
 		 * @param isMethod Indicates whether the expectation is for a method or a property
 		 * @param args An Array of arguments to the method or property setter
-		 * @throw MockExpectationError if not expectation set and ignoreMissing is false 
+		 * @throw MockExpectationError if no expectation set and ignoreMissing is false 
 		 */
 		protected function findMatchingExpectation( propertyName:String, isMethod:Boolean, args:Array = null ):MockExpectation
 		{
@@ -259,10 +265,19 @@ package com.anywebcam.mock
 			}
 			
 			if( traceMissing )
+			{
 				trace( this, 'missing:', propertyName, args );
+			}
 			
-			if( ! ignoreMissing )
-				throw new MockExpectationError( 'No Expectation set for '+ propertyName + ' with args:' + args	 );
+			if( ! ignoreMissing ) 
+			{
+				// todo: handle almost matching expectations?
+				
+				throw new MockExpectationError( 'No Expectation set: '
+					+ toString() + '.' + propertyName 
+					+ (isMethod ? '(' + (args || []).join(',') + ')' : (args ? ' = ' + args : ''))
+					);
+			}
 			
 			return null;
 		}
@@ -352,5 +367,30 @@ package com.anywebcam.mock
 			
 		}
 		*/
+		
+		public function addEventListener(type:String, listener:Function, useCapture:Boolean=false, priority:int=0, useWeakReference:Boolean=false):void
+		{
+			_eventDispatcher.addEventListener(type, listener, useCapture, priority, useWeakReference);
+		}
+
+		public function removeEventListener(type:String, listener:Function, useCapture:Boolean=false):void
+		{
+			_eventDispatcher.removeEventListener(type, listener, useCapture);
+		}
+
+		public function dispatchEvent(event:Event):Boolean
+		{
+			return _eventDispatcher.dispatchEvent(event);
+		}
+
+		public function hasEventListener(type:String):Boolean
+		{
+			return _eventDispatcher.hasEventListener(type);
+		}
+
+		public function willTrigger(type:String):Boolean
+		{
+			return _eventDispatcher.willTrigger(type);
+		}
 	}
 }

@@ -118,10 +118,12 @@ package com.anywebcam.mock
 		 */
 		mock_internal function eligible():Boolean
 		{
-			return _receiveCountValidators.every( function( validator:ReceiveCountValidator, i:int, a:Array ):Boolean 
-			{ 
-				return validator.eligible( _receivedCount );
-			});
+			return _receiveCountValidators.every( isValidatorEligible );
+		}
+		
+		private function isValidatorEligible( validator:ReceiveCountValidator, i:int, a:Array ):Boolean
+		{
+			return validator.eligible( _receivedCount );
 		}
 
 		mock_internal function receiveCountConstrained():Boolean
@@ -145,6 +147,7 @@ package com.anywebcam.mock
 				checkInvocationMethod( invokedAsMethod );
 				checkInvocationArgs( args );
 				checkInvocationOrder();
+				checkInvocationReceiveCounts();
 				
 				var retval:* = doInvoke( args );
 				
@@ -208,6 +211,14 @@ package com.anywebcam.mock
 		}
 		
 		/**
+		 * 
+		 */
+		protected function checkInvocationReceiveCounts():void 
+		{
+			eligible();
+		}
+		
+		/**
 		 * Invoke functions, dispatch events, throw error, return values if set
 		 */
 		protected function doInvoke( args:Array=null ):*
@@ -256,19 +267,18 @@ package com.anywebcam.mock
 			if( _eventsToDispatch.length == 0 )
 				return;
 			
-			var target:IEventDispatcher = (_mock.target as IEventDispatcher);
+			/*var target:IEventDispatcher = (_mock.target as IEventDispatcher);*/
 			
 			_eventsToDispatch.forEach( function( eventInfo:EventInfo, i:int, a:Array ):void
 			{
-				trace('_eventToDispatch', eventInfo.delay, eventInfo.event);
 				if( eventInfo.delay <= 0 ) 
 				{
-					target.dispatchEvent( eventInfo.event );
+					_mock.dispatchEvent( eventInfo.event );
 				}
 				else
 				{
 					eventInfo.timeout = setTimeout( 
-						function():void { target.dispatchEvent( eventInfo.event ); }, 
+						function():void { _mock.dispatchEvent( eventInfo.event ); }, 
 						eventInfo.delay );
 				}
 			});
@@ -306,7 +316,8 @@ package com.anywebcam.mock
 			if( _failedInvocation )
 			{
 				// FIXME report the error that caused the invocation to fail
-				throw new MockExpectationError(_mock.toString() + '/' + name + '() failed on invocation.');
+				/*throw new MockExpectationError(_mock.toString() + '.' + name + '() failed on invocation.');*/
+				throw new MockExpectationError('Failed on invocation: ' + toString());
 				return false;
 			}
 			
@@ -583,7 +594,7 @@ package com.anywebcam.mock
 		 */
 		public function get never():MockExpectation
 		{
-			return times( 0 );
+			return setReceiveCount( new NeverCountValidator( this ) );
 		}
 		
 		/**

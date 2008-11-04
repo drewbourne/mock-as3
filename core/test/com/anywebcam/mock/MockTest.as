@@ -246,7 +246,7 @@ package com.anywebcam.mock
 			var eventSequence:Array = [];
 			
 			// good old FlexUnit::TestCase::addAsync, only one per testcase
-			mock.target.addEventListener( 'done', addAsync( function(e:Event):void
+			mock.addEventListener( 'done', addAsync( function(e:Event):void
 			{
 				// assert the data we stored about the event sequence is correct
 				eventSequence.forEach( function( e:int, i:int, a:Array ):void
@@ -261,7 +261,7 @@ package com.anywebcam.mock
 			mock.method('done').dispatchesEvent( new Event( 'done' ) );
 			
 			// add listener for the event we are actually interested in
-			mock.target.addEventListener( 'example', function(e:Event):void
+			mock.addEventListener( 'example', function(e:Event):void
 			{
 				eventSequence.push( (e as ExampleEvent).data.id );
 			});

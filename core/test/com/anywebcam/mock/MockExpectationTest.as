@@ -324,17 +324,17 @@ package com.anywebcam.mock
 		public function testShouldVerifyIfReceiveCountIsNeverAndExpectationIsNotInvoked():void
 		{
 			e.method('test').never;
-			assertTrue( e.verifyMessageReceived() );		
+			assertTrue( e.verifyMessageReceived() );
 		}
 		
 		public function testShouldNotVerifyIfReceiveCountIsNeverAndExpectationIsInvoked():void
 		{
 			e.method('test').never;
-			e.invoke( true );
+			
 			try
 			{
-				e.verifyMessageReceived();
-				fail('Expecting MockExpectation#verifyMessageReceived to throw a MockExpectationError');
+				e.invoke( true );
+				fail('Expecting MockExpectation#invoke to throw a MockExpectationError');
 			}
 			catch( error:MockExpectationError )
 			{
@@ -514,9 +514,9 @@ package com.anywebcam.mock
 		public function testShouldSetEventToDispatchOnInvokingExpectation():void
 		{
 			var invoked:int = 0;
-			var target:IEventDispatcher = mock.target as IEventDispatcher;
+			/*var target:IEventDispatcher = mock.target as IEventDispatcher;*/
 			
-			target.addEventListener( 'testEvent', function(e:Event):void { invoked++; } )
+			mock.addEventListener( 'testEvent', function(e:Event):void { invoked++; } )
 			
 			e.method('test').andDispatchEvent( new Event('testEvent') );
 			e.invoke( true );
@@ -527,11 +527,11 @@ package com.anywebcam.mock
 		public function testShouldDispatchAllEventsSetOnExpectationWhenInvoked():void
 		{
 			var invoked:int = 0;
-			var target:IEventDispatcher = mock.target as IEventDispatcher;
+			/*var target:IEventDispatcher = mock.target as IEventDispatcher;*/
 			
-			target.addEventListener( 'eventOne', function(e:Event):void { invoked++; } );
-			target.addEventListener( 'eventTwo', function(e:Event):void { invoked++; } );
-			target.addEventListener( 'verify', addAsync( function(e:Event):void
+			mock.addEventListener( 'eventOne', function(e:Event):void { invoked++; } );
+			mock.addEventListener( 'eventTwo', function(e:Event):void { invoked++; } );
+			mock.addEventListener( 'verify', addAsync( function(e:Event):void
 			{
 				assertEquals( 2, invoked );
 			}, 100, null ));
@@ -545,7 +545,7 @@ package com.anywebcam.mock
 			e.invoke( true );
 			
 			// dispatch verify, which calls the function with assertEquals
-			target.dispatchEvent( new Event('verify') );
+			mock.dispatchEvent( new Event('verify') );
 		}
 				
 		// verify messages sent
