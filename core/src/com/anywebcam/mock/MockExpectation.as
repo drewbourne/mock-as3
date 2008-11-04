@@ -211,7 +211,7 @@ package com.anywebcam.mock
 		}
 		
 		/**
-		 * 
+		 * Checks the ReceiveCountValidators to ensure this expectation can be invoked
 		 */
 		protected function checkInvocationReceiveCounts():void 
 		{
@@ -305,7 +305,7 @@ package com.anywebcam.mock
 		/**
 		 * Verify this expectation has had it's expectations
 		 *
-		 * @return true if this expecation is fulfilled
+		 * @return true if this expectation is fulfilled
 		 * @throws MockExpectationError if the set expectations were not met
 		 */
 		public function verifyMessageReceived():Boolean
@@ -317,7 +317,7 @@ package com.anywebcam.mock
 			{
 				// FIXME report the error that caused the invocation to fail
 				/*throw new MockExpectationError(_mock.toString() + '.' + name + '() failed on invocation.');*/
-				throw new MockExpectationError('Failed on invocation: ' + toString());
+				throw new MockExpectationError('Failed on invocation: ' + this);
 				return false;
 			}
 			
@@ -336,7 +336,7 @@ package com.anywebcam.mock
 			if( !validReceiveCount ) 
 			{
 				var message:String = 'Unmet Expectation: ' 
-						+ toString()
+						+ this
 						+ ' received: ' + _receivedCount + ','
 						+ ' expected: ' + expectedReceivedCounts.join(', ');
 						
@@ -451,9 +451,9 @@ package com.anywebcam.mock
 		 */
 		mock_internal function setDispatchEventExpectation( event:Event, delay:Number = 0 ):MockExpectation
 		{
-			// fixme: is Error the best error class to throw here?
+			// FIXME is Error the best error class to throw here?
 			if( !(_mock.target is IEventDispatcher) )
-				throw new Error( 'Mock Target class is not an IEventDispatcher, target:', _mock.target );
+				throw new Error( 'Mock.target is not an IEventDispatcher: ' + this + ', target:', _mock.target );
 
 			_eventsToDispatch.push( new EventInfo( event, delay ) );	
 			return this;

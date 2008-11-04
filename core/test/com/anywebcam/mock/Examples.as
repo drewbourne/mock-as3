@@ -124,7 +124,7 @@ package com.anywebcam.mock
 				// TODO in this case we should find the closest almost matching expectations and report on that?
 				// TODO the error should be formatted like the Unmet Expectation error
 				assertEquals(
-					'this should be a nice error message, right now it isnt',
+					'No Expectation set: MockExample.optional(4)',
 					error.message);
 			}
 		}
