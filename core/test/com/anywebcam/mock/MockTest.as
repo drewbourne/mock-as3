@@ -313,6 +313,19 @@ package com.anywebcam.mock
 					error.message);
 			}
 		}
+		
+		public function testInvokeMethod():void 
+		{
+			var invoked:Boolean = false;
+			
+			mock = new Mock( new EventDispatcher() );
+			mock.method('methodName').withAnyArgs.once.andCall(function(...rest):void {
+				invoked = true;
+				trace('invokeMethod called:', rest);
+			});
+			
+			mock.invokeMethod('methodName', ['a', true, 3]);
+		}
 	}
 }
 

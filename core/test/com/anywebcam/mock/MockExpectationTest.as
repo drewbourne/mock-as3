@@ -576,9 +576,5 @@ package com.anywebcam.mock
 					error.message);
 			}
 		}
-		
-		public function testFailedInvocationShouldHaveNicErrorMessages():void {
-			
-		}
 	}
 }

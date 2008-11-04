@@ -206,6 +206,22 @@ package com.anywebcam.mock
 		}
 		
 		/**
+		 * Invoke an expected method on the Mock. 
+		 *	
+		 * @example In order to handle ...rest parameters properly the Mock delegate classes need to be implemented as per the following example.
+		 * <listing version="3.0">
+		 *	public function methodWithRestArgs(a:Parameter, b:Parameter, ...rest):ReturnType {
+		 *		return mock.invokeMethod('methodWithRestArgs', [a, b].concat(rest));
+		 *	}
+		 * </listing>
+		 */
+		public function invokeMethod( propertyName:String, args:Array = null):* 
+		{	
+			trace('Mock.invokeMethod', propertyName, "[" + args.join(',') + "]");
+			return findAndInvokeExpectation( propertyName, true, args );
+		}
+		
+		/**
 		 * Find a matching expectation and invoke it
 		 *
 		 * @param propertyName The property or method name to find an expectation for
@@ -223,7 +239,6 @@ package com.anywebcam.mock
 			
 			return null;
 		}
-		
 		
 		/**
 		 * Find a matching expectation
@@ -312,6 +327,7 @@ package com.anywebcam.mock
 		 */
 		override flash_proxy function hasProperty( name:* ):Boolean
 		{
+			// TODO check that the class we are mocking actually has the requested property
 			// always true if we are ignoring missing expectations
 			if( ignoreMissing ) return true;
 			

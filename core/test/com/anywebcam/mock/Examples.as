@@ -30,7 +30,7 @@ package com.anywebcam.mock
 		
 		public function testSomeComponentExample():void 
 		{
-			var e:MockExample = new MockExample( false );
+			var e:MockExample = new MockExample( true );
 			e.mock.method( 'acceptNumber' ).withArgs( 10 ).once;
 			e.mock.method( 'giveString' ).returns( 'ten' ).once;
 			e.mock.method( 'neverCalled' ).withArgs( 'not', 'now', 'not', 'ever' ).never;
@@ -85,5 +85,97 @@ package com.anywebcam.mock
 			}
 		}
 		
+		public function testRestArgumentsAndReceiveCountWorks():void {
+			
+			var e:MockExample = new MockExample();
+			e.mock.method('optional').withArgs(1).once;
+			
+			e.optional(1);
+			
+			e.mock.verify();
+		}
+		
+		public function testWithAnyArgsAndReceiveCountWorks():void {
+			
+			var e:MockExample = new MockExample();
+			e.mock.method('optional').withAnyArgs.twice;
+			
+			e.optional(1, 2);
+			e.optional(3);
+			
+			e.mock.verify();
+		}
+		
+		public function testWithAnyArgsAndReceiveCountFailsWithANiceErrorMessage():void {
+			
+			var e:MockExample = new MockExample();
+			e.mock.method('optional').withAnyArgs.twice;
+			
+			e.optional(1, 2);
+			e.optional(3);
+			
+			try
+			{
+				e.optional(4);
+				fail('expecting MockExpectationError');
+			}
+			catch( error:MockExpectationError )
+			{
+				// TODO in this case we should find the closest almost matching expectations and report on that?
+				// TODO the error should be formatted like the Unmet Expectation error
+				assertEquals(
+					'this should be a nice error message, right now it isnt',
+					error.message);
+			}
+		}
+		
+		public function testParametersAndReturns():void
+		{
+		  var e:MockExample = new MockExample( true );
+		  e.mock.method( 'acceptNumber' ).withArgs( 15 ).once;
+		  e.mock.method( 'giveString' ).returns( 'ten' ).once;
+		  
+		  var c:SomeComponent = new SomeComponent( e );
+		  var retval:String = c.doSomethingWithExample( 15 );
+        
+		  assertEquals( 'ten', retval );
+		  
+		  e.mock.verify();
+		}
+		
+		public function testCallThroughs():void
+		{
+			var e:MockExample = new MockExample( true );
+			e.mock.method( 'justCall' ).withNoArgs.never;
+
+			var c:SomeComponent = new SomeComponent( e );
+			c.justCallExample();
+
+			e.mock.verify();
+		}
+
+		public function testCallWithRest():void
+		{
+			var e:MockExample = new MockExample( false );
+			e.mock.method( 'callWithRest' ).withArgs("foo", "bar").once;
+
+			var c:SomeComponent = new SomeComponent( e );
+			c.callWithRest("foo", "bar");
+
+			e.mock.verify();
+		}        
+
+		public function testDispatchMyEvent():void
+		{
+			var e:MockExample = new MockExample( false );
+			var event : Event = new Event( "myEvent" );
+			e.mock.method( 'dispatchMyEvent' ).withNoArgs.once.dispatchesEvent( event );
+			
+			var c:SomeComponent = new SomeComponent( e );
+			c.dispatchMyEventWithExample();
+			
+			e.mock.verify();
+			assertTrue( "expected event to be handled", c.isEventHandled );
+		}
 	}
 }

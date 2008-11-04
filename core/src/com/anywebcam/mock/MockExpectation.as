@@ -260,6 +260,7 @@ package com.anywebcam.mock
 			
 			_eventsToDispatch.forEach( function( eventInfo:EventInfo, i:int, a:Array ):void
 			{
+				trace('_eventToDispatch', eventInfo.delay, eventInfo.event);
 				if( eventInfo.delay <= 0 ) 
 				{
 					target.dispatchEvent( eventInfo.event );
