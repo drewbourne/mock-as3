@@ -9,6 +9,11 @@ package com.anywebcam.mock.argumentConstraint
 {
 	import flash.utils.getQualifiedClassName;
 
+	/**
+	 * Matches if an argument is an instance of the given Class or is the given Class itself.
+	 * 
+	 * @private
+	 */
 	public class ClassArgumentConstraint implements ArgumentConstraint
 	{
 		private var _type:Class;

@@ -7,8 +7,14 @@
 */
 package com.anywebcam.mock.argumentConstraint
 {
+	/**
+	 * Checks if an argument provided to the mock when a method or property is invoked matches what is expected.
+	 * 
+	 * @private
+	 */
 	public interface ArgumentConstraint
 	{
 		function matches( value:Object ):Boolean;
+		function toString():String;
 	}
 }

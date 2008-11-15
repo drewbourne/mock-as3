@@ -42,7 +42,6 @@ package com.anywebcam.mock.examples
 
 		public function dispatchMyEvent():void
 		{
-			trace('MockExample.dispatchMyEvent');
 			mock.dispatchMyEvent();
 		}
 		

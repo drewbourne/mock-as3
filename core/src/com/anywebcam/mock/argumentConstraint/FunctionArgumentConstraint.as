@@ -7,10 +7,15 @@
 */
 package com.anywebcam.mock.argumentConstraint
 {
+	/**
+	 * Matches if an argument is the given Function, or invokes the given function and uses the return value.
+	 * 
+	 * @private
+	 */
 	public class FunctionArgumentConstraint implements ArgumentConstraint
 	{
 		private var _func:Function;
-
+		
 		public function FunctionArgumentConstraint( func:Function )
 		{
 			_func = func;

@@ -184,5 +184,20 @@ package com.anywebcam.mock
 			e.mock.verify();
 			assertTrue( "expected event to be handled", c.isEventHandled );
 		}
+		
+		public function testExpectationSequencing():void {
+			
+			var e:MockExample = new MockExample(false);
+			e.mock.method('isEmpty').andReturn(true).once;
+			
+			assertTrue("Mock should reply with expected value: true.", e.mock.isEmpty());
+			
+			e.mock.method('add').withArgs(Number);
+			e.mock.method('isEmpty').andReturn(false).once;
+			
+			assertFalse("Mock should reply with expected value: false.", e.mock.isEmpty());
+			
+			e.mock.verify();
+		}
 	}
 }

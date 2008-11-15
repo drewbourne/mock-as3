@@ -15,11 +15,11 @@ package com.anywebcam.mock
 
 	use namespace mock_internal;
 
-	// todo: should default to receive count at least 1
-	// todo: should remove default receive count on setting a receive count manually
+	// TODO should default to receive count at least 1
+	// TODO should remove default receive count on setting a receive count manually
 	
 	/**
-	 * Manages expectations of method or property call(s)
+	 * Manages expectations of method or property calls.
 	 */
 	public class MockExpectation
 	{
@@ -31,8 +31,8 @@ package com.anywebcam.mock
 		private var _hasExpectationType			:Boolean;
 		private var _isMethodExpectation		:Boolean;
 		private var _propertyName						:String;
-		                                  
-		// with arguments                 
+		
+		// with arguments
 		private var _expectsArguments				:Boolean;
 		private var _argumentExpectation		:ArgumentExpectation;
 
@@ -104,6 +104,7 @@ package com.anywebcam.mock
 		 * @param propertyName
 		 * @param isMethod
 		 * @param args
+		 * @private
 		 */
 		mock_internal function matches( propertyName:String, isMethod:Boolean, args:Array = null ):Boolean
 		{
@@ -115,22 +116,22 @@ package com.anywebcam.mock
 		
 		/**
 		 * Check if the expectation is eligible to be called again. It is eligible only if all the receive count validators agree, ie that its in the specified range
+		 *
+		 * @private
 		 */
 		mock_internal function eligible():Boolean
 		{
 			return _receiveCountValidators.every( isValidatorEligible );
 		}
 		
+		/**
+		 * Iterator function to check if a ReceiveCountValidator is eligible
+		 */
 		private function isValidatorEligible( validator:ReceiveCountValidator, i:int, a:Array ):Boolean
 		{
 			return validator.eligible( _receivedCount );
 		}
 
-		mock_internal function receiveCountConstrained():Boolean
-		{
-			return _receiveCountValidators.length > 0;
-		}
-		
 		/**
 		 * Invoke the expectation, checking its called the right way, with the correct arguments, and return any expected value
 		 *
@@ -169,6 +170,7 @@ package com.anywebcam.mock
 		 *
 		 * @throws MockExpectationError if invoked as a method and not a method
 		 * @throws MockExpectationError if invoked as a property and is a method
+		 * @private
 		 */
 		protected function checkInvocationMethod( invokedAsMethod:Boolean ):void
 		{
@@ -185,6 +187,7 @@ package com.anywebcam.mock
 		 * @throws MockExpectationError if not expecting args and was called with args
 		 * @throws MockExpectationError if expecting args and was called with without args
 		 * @throws MockExpectationError if args do not match
+		 * @private
 		 */
 		protected function checkInvocationArgs( args:Array = null ):void
 		{
@@ -201,6 +204,8 @@ package com.anywebcam.mock
 		
 		/**
 		 * Checks the Order Number is set and that the Mock is expecting this call
+		 *
+		 * @private
 		 */
 		protected function checkInvocationOrder():void
 		{
@@ -212,6 +217,8 @@ package com.anywebcam.mock
 		
 		/**
 		 * Checks the ReceiveCountValidators to ensure this expectation can be invoked
+		 *
+		 * @private
 		 */
 		protected function checkInvocationReceiveCounts():void 
 		{
@@ -220,6 +227,8 @@ package com.anywebcam.mock
 		
 		/**
 		 * Invoke functions, dispatch events, throw error, return values if set
+		 *
+		 * @private
 		 */
 		protected function doInvoke( args:Array=null ):*
 		{
@@ -245,6 +254,7 @@ package com.anywebcam.mock
 		 * Invoke any functions set on this expectation
 		 * 
 		 * @param args Any arguments supplied when calling this expectation
+		 * @private
 		 */
 		protected function _invokeFuncs( args:Array = null ):void
 		{
@@ -261,6 +271,7 @@ package com.anywebcam.mock
 		 * Dispatch any events set on this expectation
 		 * 
 		 * @param args Any arguments supplied when calling this expectation		
+		 * @private
 		 */
 		protected function _invokeDispatchEvents( args:Array = null ):void
 		{
@@ -288,6 +299,7 @@ package com.anywebcam.mock
 		 * Determine and return any return value set on this expectation
 		 *
 		 * @return If set returns the next return value
+		 * @private
 		 */
 		protected function _invokeReturnValue():*
 		{
@@ -301,22 +313,18 @@ package com.anywebcam.mock
 			return _valuesToYield[ valueIndex ];
 		}
 		
-		// todo: rename this method
 		/**
-		 * Verify this expectation has had it's expectations
+		 * Verify this expectation has had it's expectations met.
 		 *
 		 * @return true if this expectation is fulfilled
 		 * @throws MockExpectationError if the set expectations were not met
 		 */
-		public function verifyMessageReceived():Boolean
+		public function verify():Boolean
 		{
-			// todo: add more robust verification
-			
 			// check if called successfully
 			if( _failedInvocation )
 			{
 				// FIXME report the error that caused the invocation to fail
-				/*throw new MockExpectationError(_mock.toString() + '.' + name + '() failed on invocation.');*/
 				throw new MockExpectationError('Failed on invocation: ' + this);
 				return false;
 			}
@@ -328,10 +336,8 @@ package com.anywebcam.mock
 			
 			var expectedReceivedCounts:Array = _receiveCountValidators.map( function( validator:ReceiveCountValidator, i:int, a:Array ):String 
 			{
-				return validator.toString( _receivedCount );
+				return validator.describe( _receivedCount );
 			});
-			
-			// todo: add the expected arguments to the error message
 			
 			if( !validReceiveCount ) 
 			{
@@ -352,6 +358,7 @@ package com.anywebcam.mock
 		 * @param propertyName
 		 * @param isMethodExpectation
 		 * @return MockExpectation
+		 * @private
 		 */
 		mock_internal function setExpectationType( propertyName:String, isMethodExpectation:Boolean ):MockExpectation
 		{
@@ -368,13 +375,16 @@ package com.anywebcam.mock
 		 * @param areArgumentsExpected
 		 * @param expectedArguments
 		 * @return MockExpectation
+		 * @private
 		 */
 		mock_internal function setArgumentExpectation( areArgumentsExpected:Boolean, expectedArguments:Object = null ):MockExpectation
 		{
 		  // FIXME add additional error detail to the MockExpectationError, like which property, what args, which mock instance, etc
 			if( _hasExpectationType && ! _isMethodExpectation 
-			&& (expectedArguments is Array && (expectedArguments as Array).length > 1 ) )
+					&& (expectedArguments is Array && (expectedArguments as Array).length > 1 ) ) {
+				
 				throw new MockExpectationError( toString() + ', Property expectation can only accept one argument' );
+			}
 			
 			_expectsArguments = areArgumentsExpected;
 			_argumentExpectation = new ArgumentExpectation( expectedArguments );
@@ -388,6 +398,7 @@ package com.anywebcam.mock
 		 * @param type
 		 * @param number
 		 * @return MockExpectation
+		 * @private
 		 */
 		mock_internal function setReceiveCount( validator:ReceiveCountValidator ):MockExpectation
 		{
@@ -400,6 +411,7 @@ package com.anywebcam.mock
 		 *
 		 * @param rest
 		 * @return MockExpectation
+		 * @private
 		 */
 		mock_internal function setReturnExpectation( ...rest ):MockExpectation
 		{
@@ -422,6 +434,7 @@ package com.anywebcam.mock
 		 *
 		 * @param error
 		 * @return MockExpectation
+		 * @private
 		 */
 		mock_internal function setThrowExpectation( error:Error ):MockExpectation
 		{
@@ -434,6 +447,7 @@ package com.anywebcam.mock
 		 *
 		 * @param func
 		 * @return MockExpectation
+		 * @private
 		 */
 		mock_internal function setInvokeExpectation( func:Function ):MockExpectation
 		{
@@ -448,6 +462,7 @@ package com.anywebcam.mock
 		 * @param delay The number of milliseconds to delay before dispatching the event
 		 * @return MockExpectation
 		 * @throw Error if mock target is not an IEventDispatcher
+		 * @private
 		 */
 		mock_internal function setDispatchEventExpectation( event:Event, delay:Number = 0 ):MockExpectation
 		{
@@ -463,6 +478,7 @@ package com.anywebcam.mock
 		 * Set an expectation to be executed in order relative to other ordered expectation
 		 * 
 		 * @return MockExpectation
+		 * @private
 		 */
 		mock_internal function setOrderedExpectation():MockExpectation
 		{
@@ -470,15 +486,18 @@ package com.anywebcam.mock
 			return this;
 		}
 		
-		/// ---- mock expectation setup ---- ///
-		
-		// is expectation for a method or a property?
-		
 		/**
 		 * Set this expectation to be a method with the supplied name
 		 * 
 		 * @param methodName The name of the method
-		 * @return MockExpectation		
+		 * @return MockExpectation
+		 * @example 
+		 * <listing version="3.0">
+		 *	mock.method('cook');
+		 *	
+		 *	mock.cook();
+		 *	mock.verify();
+		 * </listing>
 		 */
 		public function method( methodName:String ):MockExpectation
 		{
@@ -490,16 +509,29 @@ package com.anywebcam.mock
 		 * 
 		 * @param propertyName The name of the property
 		 * @return MockExpectation
+		 * @example 
+		 * <listing version="3.0">
+		 *	mock.property('hungry');
+		 *	
+		 *	mock.hungry = true;
+		 *	mock.verify();
+		 * </listing>
 		 */
 		public function property( propertyName:String ):MockExpectation
 		{
 			return setExpectationType( propertyName, false );
 		}
 		
-		// should it expect arguments
-		
 		/**
 		 * Set this expectation to accept any arguments
+		 *	
+		 * @example 
+		 * <listing version="3.0">
+		 *	mock.method('eat').withAnyArgs;
+		 *	
+		 *	mock.eat(1, new Waffle(), { toppings: ['Syrup', 'IceCream'] });
+		 *	mock.verify();
+		 * </listing>
 		 */
 		public function get withAnyArgs():MockExpectation
 		{
@@ -508,6 +540,14 @@ package com.anywebcam.mock
 		
 		/**
 		 * Set this expectation to accept no arguments
+		 * 
+		 * @example 
+		 * <listing version="3.0">
+		 *	mock.method('cook').withNoArgs;
+		 *	
+		 *	mock.cook();
+		 *	mock.verify();
+		 * </listing>
 		 */
 		public function get withNoArgs():MockExpectation
 		{
@@ -516,16 +556,43 @@ package com.anywebcam.mock
 		
 		/**
 		 * Set this expectation to accept the supplied arguments or constraints
+		 * 
+		 * @example 
+		 * <listing version="3.0">
+		 *	mock.method('cook').withNoArgs;
+		 *	
+		 *	mock.cook();
+		 *	mock.verify();
+		 * </listing>
 		 */
 		public function withArgs( ...rest ):MockExpectation
 		{
 			return setArgumentExpectation( true, rest );
 		}
 		
-		// return values
-		
 		/**
-		 * Set a single or sequence of return values, alias of andReturn()
+		 * Set a single or sequence of return values, alias of #andReturn
+		 *	
+		 * @example 
+		 * <listing version="3.0">
+		 *	mock.method('ten').returns(10);
+		 *	
+		 *	// #ten() will always return 10
+		 *	assertEquals(10, mock.ten());
+		 *	assertEquals(10, mock.ten());
+		 *	assertEquals(10, mock.ten());
+		 *	
+		 *	mock.method('nextFib').returns(1, 1, 2, 3);
+		 *	
+		 *	// #nextFib will return the values in sequence and then repeat the last value
+		 *	assertEquals(1, mock.nextFib());
+		 *	assertEquals(1, mock.nextFib());
+		 *	assertEquals(2, mock.nextFib());
+		 *	assertEquals(3, mock.nextFib());
+		 *	assertEquals(3, mock.nextFib());
+		 *	assertEquals(3, mock.nextFib());
+		 *	mock.verify();
+		 * </listing>
 		 */
 		public function returns( ...rest ):MockExpectation
 		{
@@ -533,7 +600,9 @@ package com.anywebcam.mock
 		}
 		
 		/**
-		 * Set a single or sequence of return values, alias of returns()
+		 * Set a single or sequence of return values, alias of #returns
+		 *	
+		 * @see #returns
 		 */
 		public function andReturn( ...rest ):MockExpectation
 		{
@@ -542,6 +611,18 @@ package com.anywebcam.mock
 		
 		/**
 		 * Set an error to be thrown, alias of andThrow()
+		 *	
+		 * @example 
+		 * <listing version="3.0">
+		 *	mock.method('generateError').throws(new IllegalArgumentError('Oh noes!'));
+		 *	try {
+		 *		mock.generateError();
+		 *		fail('did not throw expected error');
+		 *	} catch (error:IllegalArgumentError) {
+		 *		; // expected
+		 *	}
+		 *	mock.verify();
+		 * </listing>
 		 */
 		public function throws( error:Error ):MockExpectation
 		{
@@ -550,6 +631,8 @@ package com.anywebcam.mock
 		
 		/**
 		 * Set an error to be thrown, alias of throws()
+		 *	
+		 * @see #throws
 		 */
 		public function andThrow( error:Error ):MockExpectation
 		{
@@ -558,6 +641,25 @@ package com.anywebcam.mock
 		
 		/**
 		 * Set the supplied function to be called when the expectation is called, alias of andCall()
+		 *	
+		 * @example 
+		 * <listing version="3.0">
+		 *	mock.method('doSomeWork').calls(function():void {
+		 *		trace('doing some work');
+		 *	});
+		 *	
+		 *	mock.doSomeWork();
+		 *	// 'doing some work'
+		 *	
+		 *	mock.method('doMoreWork').withArgs(1, 2).calls(function(a:Number, b:Number):void {
+		 *		trace('doing more work', a, b);
+		 *	});
+		 *	
+		 *	mock.doMoreWork(1, 2);
+		 *	// 'doing more work 1 2'
+		 *	
+		 *	mock.verify();
+		 * </listing>
 		 */
 		public function calls( func:Function ):MockExpectation
 		{
@@ -566,6 +668,8 @@ package com.anywebcam.mock
 		
 		/**
 		 * Set the supplied function to be called when the expectation is calls
+		 *	
+		 * @see #calls
 		 */
 		public function andCall( func:Function ):MockExpectation
 		{
@@ -574,6 +678,19 @@ package com.anywebcam.mock
 		
 		/**
 		 * Set the supplied event to be dispatched when the expectation is called, alias of andDispatchEvent()
+		 *	
+		 * @example
+		 * <listing version="3.0">
+		 *	mock.method('changeValue').dispatchesEvent(new Event(Event.CHANGE));
+		 *	mock.method('changeValueLater').dispatchesEvent(new Event(Event.CHANGE), 1000);
+		 *	
+		 *	mock.addEventListener(Event.CHANGE, addAsync(function(event:Event):void {
+		 *		trace('changed');
+		 *	}, 2000));
+		 *	
+		 *	mock.changeValue();
+		 *	mock.changeValueLater();
+		 * </listing>
 		 */
 		public function dispatchesEvent( event:Event, delay:Number = 0 ):MockExpectation
 		{
@@ -582,6 +699,8 @@ package com.anywebcam.mock
 		
 		/**
 		 * Set the supplied event to be dispatched when the expectation is called, alias of dispatchesEvent()
+		 *	
+		 * @see #dispatchesEvent
 		 */
 		public function andDispatchEvent( event:Event, delay:Number = 0 ):MockExpectation
 		{
@@ -591,6 +710,14 @@ package com.anywebcam.mock
 		// receive counts
 		/**
 		 * Set this expectation to expect NOT to be called
+		 *	
+		 * @example
+		 * <listing version="3.0">
+		 *	mock.method('doNotCall').never;
+		 *	
+		 *	// mock.doNotCall();
+		 *	mock.verify();
+		 * </listing>
 		 */
 		public function get never():MockExpectation
 		{
@@ -598,7 +725,15 @@ package com.anywebcam.mock
 		}
 		
 		/**
-		 * Set this expectation to expect to be called ONCE only. 
+		 * Set this expectation to expect to be called ONCE only.
+		 *	
+		 * @example
+		 * <listing version="3.0">
+		 *	mock.method('singular').once;
+		 *	
+		 *	mock.singular();
+		 *	mock.verify();
+		 * </listing>
 		 */
 		public function get once():MockExpectation
 		{
@@ -606,7 +741,16 @@ package com.anywebcam.mock
 		}
 		
 		/**
-		 * Set this expectation to expect to be called TWICE only. 
+		 * Set this expectation to expect to be called TWICE only.
+		 *	
+		 * @example
+		 * <listing version="3.0">
+		 *	mock.method('toothy').twice;
+		 *	
+		 *	mock.toothy();
+		 *	mock.toothy();
+		 *	mock.verify();
+		 * </listing>
 		 */
 		public function get twice():MockExpectation
 		{
@@ -615,6 +759,17 @@ package com.anywebcam.mock
 		
 		/**
 		 * Set this expectation to expect to be called exactly the supplied number of times
+		 *
+		 * <p>Alias of #times</p>
+		 * 
+		 * @see #times
+		 * @example
+		 * <listing version="3.0">
+		 *	mock.method('save').exactly(1);
+		 *	
+		 *	mock.save();
+		 *	mock.verify();
+		 * </listing>
 		 */
 		public function exactly( count:int ):MockExpectation
 		{
@@ -623,6 +778,15 @@ package com.anywebcam.mock
 		
 		/**
 		 * Set this expectation to expect to be called at least the supplied number of times
+		 *
+		 *	@example
+		 * <listing version="3.0">
+		 *	mock.method('oneOrMore').atLeast(1);
+		 *	
+		 *	mock.oneOrMore();
+		 *	mock.oneOrMore();
+		 *	mock.verify();
+		 * </listing>
 		 */
 		public function atLeast( count:int ):MockExpectation
 		{
@@ -631,6 +795,15 @@ package com.anywebcam.mock
 		
 		/**
 		 * Set this expectation to expect to be called at most the supplied number of times
+		 *	
+		 * @example
+		 * <listing version="3.0">
+		 *	mock.method('thricePerhaps').atMost(3);
+		 *	
+		 *	mock.thricePerhaps();
+		 *	mock.thricePerhaps();
+		 *	mock.verify();
+		 * </listing>
 		 */
 		public function atMost( count:int ):MockExpectation
 		{
@@ -639,6 +812,16 @@ package com.anywebcam.mock
 		
 		/**
 		 * Set this expectation to expect to be called any number of times
+		 *
+		 * <p>Alias of atLeast(0)</p>
+		 *
+		 * @example
+		 * <listing version="3.0">
+		 *	mock.method('youMightCall').anyNumberOfTimes;
+		 *	
+		 *	mock.youMightCall();
+		 *	mock.verify();
+		 * </listing>
 		 */
 		public function get anyNumberOfTimes():MockExpectation
 		{
@@ -646,16 +829,37 @@ package com.anywebcam.mock
 		}
 		
 		/**
-		 * Set this expectation to expect to be called zero or more times
+		 * Set this expectation to expect to be called zero or more times. 
+		 *	
+		 * <p>Alias of #anyNumberOfTimes</p>
+		 * <p>Alias of atLeast(0)</p>
+		 * 
+		 * @see #anyNumberOfTimes
+		 * @example
+		 * <listing version="3.0">
+		 *	mock.method('youMightCall').zeroOrMoreTimes;
+		 *	
+		 *	mock.youMightCall();
+		 *	mock.verify();
+		 * </listing>
 		 */
 		public function get zeroOrMoreTimes():MockExpectation
 		{
 			return atLeast( 0 );
 		}
 		
-		// todo: allow a range?		
 		/**
 		 * Set this expectation to expect to be called the supplied number of times
+		 *
+		 * @example
+		 * <listing version="3.0">
+		 *	mock.method('one').times(3);
+		 *	
+		 *	mock.one();
+		 *	mock.one();
+		 *	mock.one();
+		 *	mock.verify();
+		 * </listing>
 		 */
 		public function times( count:int = -1 ):MockExpectation
 		{
@@ -664,7 +868,23 @@ package com.anywebcam.mock
 				: this;
 		}
 		
-		// method ordering
+		/**
+		 * Indicate that this method should be called in order with other expectations marked by #ordered()
+		 *	
+		 * @example
+		 * <listing version="3.0">
+		 *	mock.method('one').ordered();
+		 *	mock.method('anyOrder').anyNumberOfTimes;
+		 *	mock.method('two').ordered();
+		 *	
+		 *	mock.one();
+		 *	mock.anyOrder();
+		 *	mock.anyOrder();
+		 *	mock.two();
+		 *	mock.anyOrder();
+		 *	mock.verify();
+		 * </listing>
+		 */
 		public function ordered():MockExpectation
 		{
 			return setOrderedExpectation();
@@ -676,6 +896,8 @@ import flash.events.Event;
 
 /**
  * Event and delay data for the expectation
+ *
+ * @private
  */
 internal class EventInfo
 {

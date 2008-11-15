@@ -2,6 +2,11 @@ package com.anywebcam.mock.receiveCountValidator
 {
 	import com.anywebcam.mock.*;
 
+	/**
+	 * Validates a receive count only if it is at most the expected limit.
+	 *
+	 * @private
+	 */
 	public class AtMostCountValidator implements ReceiveCountValidator
 	{
 		public var expectation:MockExpectation;
@@ -23,7 +28,7 @@ package com.anywebcam.mock.receiveCountValidator
 			return n <= limit;
 		}
 		
-		public function toString( n:int ):String 
+		public function describe( n:int ):String 
 		{
 			var diff:int = (n - limit);
 			var difference:String = ' (' + (diff > 0 ? '+' : '' ) + diff + ')';

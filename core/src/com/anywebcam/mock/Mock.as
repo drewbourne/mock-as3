@@ -17,13 +17,16 @@ package com.anywebcam.mock
 	use namespace mock_internal;
 	
 	/**
-	 * Proxies calls to the mock object, and manages expectations.
-	 *
-	 * @param target The Object to mock
-	 * @param ignoreMissing Indicates whether methods and properties without expectations are ignored
+	 * 
 	 */
 	dynamic public class Mock extends Proxy implements IEventDispatcher
 	{
+		/**
+		 * Constructor
+		 * 
+		 * @param target The target that is delegating calls to this Mock
+		 * @param ignoreMissing Indicates whether methods and properties without expectations are ignored
+		 */
 		public function Mock( target:Object=null, ignoreMissing:Boolean = false )
 		{
 			_target = target;
@@ -34,30 +37,34 @@ package com.anywebcam.mock
 			_eventDispatcher = new EventDispatcher(this);
 		}
 		
-		private var _eventDispatcher:IEventDispatcher;
-
 		private var _target:Object;
 		
 		/**
-		 * The Object to mock
+		 * The target object to mock
+		 * 
+		 * @private
 		 */
 		public function get target():Object
 		{
 			return _target;
 		}
 		
+		private var _eventDispatcher:IEventDispatcher;
+		
 		/**
-		 * The Class of the target
+		 * The IEventDispatcher instance to use for event dispatch.
+		 *
+		 * @private
 		 */
-		public function get targetClass():Class
+		public function get eventDispatcher():IEventDispatcher 
 		{
-			return null;
+			return _eventDispatcher;
 		}
 		
 		private var _ignoreMissing:Boolean;
 
 		/**
-		 * Indicates whether methods and properties without expectations are ignored
+		 * Indicates whether methods and properties without expectations are ignored.
 		 */
 		public function get ignoreMissing():Boolean
 		{
@@ -72,7 +79,7 @@ package com.anywebcam.mock
 		private var _traceMissing:Boolean
 		
 		/**
-		 *
+		 * When #ignoreMissing is true, indicates whether methods and properties without expectations are recorded using trace().
 		 */
 		public function get traceMissing():Boolean
 		{
@@ -88,15 +95,12 @@ package com.anywebcam.mock
 		
 		/**
 		 * Array of Mock Expectations set on this Mock instance
+		 *	
+		 * @private
 		 */
 		public function get expectations():Array
 		{
 			return _expectations;
-		}
-
-		public function set expectations( value:Array ):void
-		{
-			_expectations = value;
 		}
 		
 		/**
@@ -105,9 +109,9 @@ package com.anywebcam.mock
 		private var _currentOrderNumber:int;
 		
 		/**
-		 * 
+		 * Expectations set to be run in order
 		 */
-		public var _orderedExpectations:Array;
+		private var _orderedExpectations:Array;
 		
 		/**
 		 * String representation of this Mock
@@ -119,9 +123,15 @@ package com.anywebcam.mock
 		}
 
 		/**
-		 * Create an execptation on this Mock
+		 * Create an expectation on this Mock
 		 *
 		 * @return MockExpectaton A new MockExpectation instance
+		 * @see #method()
+		 * @see #property()
+		 * @example
+		 * <listing version="3.0">
+		 * 	mock.expect().method('methodName');
+		 * </listing>
 		 */
 		public function expect():MockExpectation
 		{
@@ -135,6 +145,10 @@ package com.anywebcam.mock
 		 * 
 		 * @param methodName The name of the target method to mock
 		 * @return MockExpectation A new MockExpectation instance
+		 * @example
+		 * <listing version="3.0">
+		 *	mock.method('methodName');
+		 * </listing>
 		 */
 		public function method( methodName:String ):MockExpectation
 		{
@@ -146,6 +160,10 @@ package com.anywebcam.mock
 		 * 
 		 * @param propertyName The name of the target property to mock
 		 * @return MockExpectation A new MockExpectation instance		
+		 * @example
+		 * <listing version="3.0">
+		 *	mock.property('propertyName');
+		 * </listing>
 		 */
 		public function property( propertyName:String ):MockExpectation
 		{
@@ -157,13 +175,15 @@ package com.anywebcam.mock
 		 * 
 		 * @return True if all expectations are met
 		 * @throws MockExpectationError with results of failed expectations
+		 * @example
+		 * <listing version="3.0">
+		 *	mock.verify();
+		 * </listing>
 		 */
 		public function verify():Boolean
 		{
 			var failedExpectations:Array = _expectations.map( verifyExpectation ).filter( isNotNull );
 			var expectationsAllVerified:Boolean = failedExpectations.length == 0;
-			
-			trace('verify:', failedExpectations, expectationsAllVerified);
 			
 			if( !expectationsAllVerified )
 				throw new MockExpectationError( 
@@ -182,6 +202,8 @@ package com.anywebcam.mock
 		 * @param expectation The expectation to verify
 		 * @param index The index of the expectation
 		 * @param array The Expectations Array
+		 * @return a MockExpectationError if the expectation fails verify(), null otherwise.
+		 * @private
 		 */
 		protected function verifyExpectation( expectation:MockExpectation, index:int, array:Array ):MockExpectationError
 		{
@@ -189,7 +211,7 @@ package com.anywebcam.mock
 			
 			try
 			{
-				expectation.verifyMessageReceived();
+				expectation.verify();
 			}
 			catch( error:MockExpectationError )
 			{
@@ -223,7 +245,6 @@ package com.anywebcam.mock
 		 */
 		public function invokeMethod( propertyName:String, args:Array = null):* 
 		{	
-			trace('Mock.invokeMethod', propertyName, "[" + args.join(',') + "]");
 			return findAndInvokeExpectation( propertyName, true, args );
 		}
 		
@@ -233,17 +254,20 @@ package com.anywebcam.mock
 		 * @param propertyName The property or method name to find an expectation for
 		 * @param isMethod Indicates whether the expectation is for a method or a property
 	   * @param args An Array of arguments to the method or property setter
+	   * @private
 		 */
 		protected function findAndInvokeExpectation( propertyName:String, isMethod:Boolean, args:Array = null ):*
 		{
 			var expectation:MockExpectation = findMatchingExpectation( propertyName, isMethod, args );
+			var result:* = null;
 			
-			if( expectation ) 
-				return expectation.invoke( isMethod, args );
+			if( expectation ) {
+				result = expectation.invoke( isMethod, args );
+			}
 			
 			// todo: handle almost matching expectations?
 			
-			return null;
+			return result;
 		}
 		
 		/**
@@ -253,6 +277,7 @@ package com.anywebcam.mock
 		 * @param isMethod Indicates whether the expectation is for a method or a property
 		 * @param args An Array of arguments to the method or property setter
 		 * @throw MockExpectationError if no expectation set and ignoreMissing is false 
+		 * @private
 		 */
 		protected function findMatchingExpectation( propertyName:String, isMethod:Boolean, args:Array = null ):MockExpectation
 		{
@@ -313,6 +338,7 @@ package com.anywebcam.mock
 		// function calls
 		/**
 		 * @throw MockExpectationError if not expectation set and ignoreMissing is false 
+		 * @private
 		 */
 		override flash_proxy function callProperty( name:*, ...args ):*
 		{
@@ -322,6 +348,7 @@ package com.anywebcam.mock
 		// property get requests
 		/**
 		 * @throw MockExpectationError if not expectation set and ignoreMissing is false 
+		 * @private
 		 */
 		override flash_proxy function getProperty( name:* ):*
 		{
@@ -331,6 +358,7 @@ package com.anywebcam.mock
 		// property set requests
 		/**
 		 * @throw MockExpectationError if not expectation set and ignoreMissing is false 
+		 * @private
 		 */
 		override flash_proxy function setProperty( name:*, value:* ):void
 		{
@@ -339,6 +367,8 @@ package com.anywebcam.mock
 		
 		/**
 		 * True if we have an expectation for this property name or if ignoreMissing is true, false otherwise.
+		 * 
+		 * @private
 		 */
 		override flash_proxy function hasProperty( name:* ):Boolean
 		{
@@ -368,26 +398,41 @@ package com.anywebcam.mock
 		}
 		*/
 		
+		/**
+		 * @see flash.events.IEventDispatcher#addEventListener
+		 */	
 		public function addEventListener(type:String, listener:Function, useCapture:Boolean=false, priority:int=0, useWeakReference:Boolean=false):void
 		{
 			_eventDispatcher.addEventListener(type, listener, useCapture, priority, useWeakReference);
 		}
 
+		/**
+		 * @see flash.events.IEventDispatcher#removeEventListener
+		 */
 		public function removeEventListener(type:String, listener:Function, useCapture:Boolean=false):void
 		{
 			_eventDispatcher.removeEventListener(type, listener, useCapture);
 		}
-
+		
+		/**
+		 * @see flash.events.IEventDispatcher#dispatchEvent
+		 */
 		public function dispatchEvent(event:Event):Boolean
 		{
 			return _eventDispatcher.dispatchEvent(event);
 		}
 
+		/**
+		 * @see flash.events.IEventDispatcher#hasEventListener
+		 */
 		public function hasEventListener(type:String):Boolean
 		{
 			return _eventDispatcher.hasEventListener(type);
 		}
 
+		/**
+		 * @see flash.events.IEventDispatcher#willTrigger
+		 */
 		public function willTrigger(type:String):Boolean
 		{
 			return _eventDispatcher.willTrigger(type);

@@ -7,6 +7,11 @@
 */
 package com.anywebcam.mock.argumentConstraint
 {
+	/**
+	 * Matches if an argument is any of types: Number, int, uint.
+	 *
+	 * @private
+	 */
 	public class NumberArgumentConstraint implements ArgumentConstraint
 	{
 		public function NumberArgumentConstraint( ignore:Object )

@@ -7,6 +7,11 @@
 */
 package com.anywebcam.mock.argumentConstraint
 {
+	/**
+	 * Matches if an argument is the expected RegExp, or if the actual value is a String and the RegExp test is true.
+	 *
+	 * @private
+	 */
 	public class RegExpArgumentConstraint implements ArgumentConstraint
 	{
 		private var _regexp:RegExp;

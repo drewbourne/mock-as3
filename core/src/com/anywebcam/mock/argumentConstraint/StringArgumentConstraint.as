@@ -7,6 +7,11 @@
 */
 package com.anywebcam.mock.argumentConstraint
 {
+	/**
+	 * Matches if an argument value is a String.
+	 * 
+	 * @private
+	 */
 	public class StringArgumentConstraint implements ArgumentConstraint
 	{
 		public function StringArgumentConstraint( ignore:Object )

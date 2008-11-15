@@ -47,7 +47,7 @@ package com.anywebcam.mock
 		{
 			e.method('testMethod').once;
 			e.invoke( true );
-			assertTrue( e.verifyMessageReceived() );
+			assertTrue( e.verify() );
 		}
 		
 		public function testMethodExpectationShouldOverridePropertyExpectationIfSetAfterwards():void
@@ -55,7 +55,7 @@ package com.anywebcam.mock
 			e.property('donuts');
 			e.method('testMethod').once;
 			e.invoke( true );
-			assertTrue( e.verifyMessageReceived() );
+			assertTrue( e.verify() );
 		}
 		
 		public function testMethodExpectationShouldFailIfCalledAsProperty():void
@@ -68,7 +68,7 @@ package com.anywebcam.mock
 			}
 			catch( error:MockExpectationError )
 			{
-				try { e.verifyMessageReceived(); fail('Expecting MockExpectationError'); } 
+				try { e.verify(); fail('Expecting MockExpectationError'); } 
 				catch (error:MockExpectationError) { ;/* NOOP */ }
 			}
 		}
@@ -78,7 +78,7 @@ package com.anywebcam.mock
 		{
 			e.method('testMethod').withNoArgs;
 			e.invoke( true );
-			assertTrue( e.verifyMessageReceived() );
+			assertTrue( e.verify() );
 		}
 
 		public function testMethodExpectationShouldAcceptNoArgumentsAndFailVerifyIfInvokedWithArguments():void
@@ -92,7 +92,7 @@ package com.anywebcam.mock
 			}
 			catch( error:MockExpectationError )
 			{
-				try { e.verifyMessageReceived(); fail('Expecting MockExpectationError'); } 
+				try { e.verify(); fail('Expecting MockExpectationError'); } 
 				catch (error:MockExpectationError) { ;/* NOOP */ }
 			}
 		}
@@ -102,7 +102,7 @@ package com.anywebcam.mock
 			e.method('testMethod').withAnyArgs;
 			
 			e.invoke( true );
-			assertTrue( e.verifyMessageReceived() );
+			assertTrue( e.verify() );
 		}
 
 		public function testMethodExpectationShouldVerifyWithNullWhenSetToAcceptAnyArguments():void
@@ -110,7 +110,7 @@ package com.anywebcam.mock
 			e.method('testMethod').withAnyArgs;
 			
 			e.invoke( true, null );
-			assertTrue( e.verifyMessageReceived() );						
+			assertTrue( e.verify() );						
 		}
 
 		public function testMethodExpectationShouldVerifyWithAnyArgsWhenSetToAcceptAnyArguments():void
@@ -118,14 +118,14 @@ package com.anywebcam.mock
 			e.method('testMethod').withAnyArgs;
 						
 			e.invoke( true, [1, 2, 3, 4] );
-			assertTrue( e.verifyMessageReceived() );			
+			assertTrue( e.verify() );			
 		}
 		
 		public function testMethodExpectationShouldAcceptSpecificArgumentsAndVerityIfInvokeWithCorrectArguments():void
 		{
 			e.method('testMethod').withArgs( Number, Boolean, String );
 			e.invoke( true, [1, true, 'test'] );
-			assertTrue( e.verifyMessageReceived() );
+			assertTrue( e.verify() );
 		}
 		
 		public function testMethodExpectationShouldAcceptSpecificArgumentsAndFailVerifyIfInvokedWithIncorrectArguments():void
@@ -138,7 +138,7 @@ package com.anywebcam.mock
 			}
 			catch( error:MockExpectationError )
 			{
-				try { e.verifyMessageReceived(); fail('Expecting MockExpectationError'); } 
+				try { e.verify(); fail('Expecting MockExpectationError'); } 
 				catch (error:MockExpectationError) { ;/* NOOP */ }
 			}
 		}
@@ -147,7 +147,7 @@ package com.anywebcam.mock
 		{
 			e.method('icanhasone').withArgs( 1 );
 			e.invoke( true, [1] );
-			assertTrue( e.verifyMessageReceived() );
+			assertTrue( e.verify() );
 		}
 		
 		public function testMethodExpectationShouldAcceptSingleLiteralValueAndFailVerifyIfInvokedWithIncorrectArguments():void
@@ -160,7 +160,7 @@ package com.anywebcam.mock
 			}
 			catch( error:MockExpectationError )
 			{
-				try { e.verifyMessageReceived(); fail('Expecting MockExpectationError'); } 
+				try { e.verify(); fail('Expecting MockExpectationError'); } 
 				catch (error:MockExpectationError) { ;/* NOOP */ }
 			}
 		}
@@ -170,7 +170,7 @@ package com.anywebcam.mock
 		{
 			e.property('testProperty');
 			e.invoke( false );
-			assertTrue( e.verifyMessageReceived() );
+			assertTrue( e.verify() );
 		}
 		
 		public function testPropertyExpectationShouldOverrideMethodExpectationIfSetAfterwards():void
@@ -179,14 +179,14 @@ package com.anywebcam.mock
 			e.property('donuts');
 			assertEquals( 'donuts', e.name );
 			e.invoke( false );
-			assertTrue( e.verifyMessageReceived() );
+			assertTrue( e.verify() );
 		}
 		
 		public function testPropertyExpectationShouldVerifyWithCorrectArgument():void
 		{
 			e.property('testProperty').withArgs( String );
 			e.invoke( false, ['hello'] );
-			assertTrue( e.verifyMessageReceived() );
+			assertTrue( e.verify() );
 		}
 		
 		public function testPropertyExpectationShouldFailToVerifyWithIncorrectArgument():void
@@ -199,7 +199,7 @@ package com.anywebcam.mock
 			}
 			catch( error:MockExpectationError )
 			{
-				try { e.verifyMessageReceived(); fail('Expecting MockExpectationError'); } 
+				try { e.verify(); fail('Expecting MockExpectationError'); } 
 				catch (error:MockExpectationError) { ;/* NOOP */ }
 			}
 		}
@@ -214,7 +214,7 @@ package com.anywebcam.mock
 			catch( error:MockExpectationError )
 			{
 				// true because we didnt invoke the property, and the default receive count is any
-				assertTrue( e.verifyMessageReceived() );
+				assertTrue( e.verify() );
 			}
 		}
 		
@@ -228,7 +228,7 @@ package com.anywebcam.mock
 			}
 			catch( error:MockExpectationError )
 			{
-				try { e.verifyMessageReceived(); fail('Expecting MockExpectationError'); } 
+				try { e.verify(); fail('Expecting MockExpectationError'); } 
 				catch (error:MockExpectationError) { ;/* NOOP */ }
 			}
 		}
@@ -258,7 +258,7 @@ package com.anywebcam.mock
 				assertTrue( v, e.invoke( true ) );
 			});
 			
-			assertTrue( e.verifyMessageReceived() );
+			assertTrue( e.verify() );
 		}
 		
 		public function testShouldReturnValuesSequentiallyThenRepeatLastValueForAllSubsequentInvocations():void
@@ -271,7 +271,7 @@ package com.anywebcam.mock
 				assertEquals( v, e.invoke( true ) );
 			});
 			
-			assertTrue( e.verifyMessageReceived() );
+			assertTrue( e.verify() );
 		}
 		
 		// settings throw errors
@@ -300,7 +300,7 @@ package com.anywebcam.mock
 			catch( error:Error )
 			{
 				assertEquals( 'ThrownByMockExpectation', error.message );
-				assertTrue( e.verifyMessageReceived() );
+				assertTrue( e.verify() );
 			}
 		}
 		
@@ -308,7 +308,7 @@ package com.anywebcam.mock
 		public function testShouldVerifyIfReceiveCountIsAnyAndExpectationIsNotInvoked():void
 		{
 			e.method('test').anyNumberOfTimes;
-			assertTrue( e.verifyMessageReceived() );
+			assertTrue( e.verify() );
 		}
 		
 		public function testShouldVerifyIfReceiveCountIsAnyAndExpectationIsInvoked():void
@@ -318,13 +318,13 @@ package com.anywebcam.mock
 			e.invoke( true );
 			e.invoke( true );
 			e.invoke( true );
-			assertTrue( e.verifyMessageReceived() );
+			assertTrue( e.verify() );
 		}
 		
 		public function testShouldVerifyIfReceiveCountIsNeverAndExpectationIsNotInvoked():void
 		{
 			e.method('test').never;
-			assertTrue( e.verifyMessageReceived() );
+			assertTrue( e.verify() );
 		}
 		
 		public function testShouldNotVerifyIfReceiveCountIsNeverAndExpectationIsInvoked():void
@@ -349,7 +349,7 @@ package com.anywebcam.mock
 			e.invoke( true );
 			e.invoke( true );
 			e.invoke( true );
-			assertTrue( e.verifyMessageReceived() );
+			assertTrue( e.verify() );
 		}
 		
 		public function testShouldNotVerifyIfReceiveCountIsExactlyAndNotInvokedCorrectNumberOfTimes():void
@@ -360,7 +360,7 @@ package com.anywebcam.mock
 			e.invoke( true );
 			try 
 			{
-				e.verifyMessageReceived();
+				e.verify();
 				fail('Expecting MockExpectation#verifyMessageReceived to throw a MockExpectationError');
 			}
 			catch( error:MockExpectationError ) 
@@ -375,18 +375,18 @@ package com.anywebcam.mock
 			e.method('test').atLeast( 3 );
 			
 			e.invoke( true );
-			try { e.verifyMessageReceived(); fail('Expecting MockExpectationError'); } 
+			try { e.verify(); fail('Expecting MockExpectationError'); } 
 			catch (error:MockExpectationError) { ;/* NOOP */ }
 			
 			e.invoke( true );
-			try { e.verifyMessageReceived(); fail('Expecting MockExpectationError'); } 
+			try { e.verify(); fail('Expecting MockExpectationError'); } 
 			catch (error:MockExpectationError) { ;/* NOOP */ }
 			
 			e.invoke( true );
-			assertTrue( e.verifyMessageReceived() );
+			assertTrue( e.verify() );
 
 			e.invoke( true );
-			assertTrue( e.verifyMessageReceived() );
+			assertTrue( e.verify() );
 		}
 		
 		// invoked less than, and more than
@@ -395,17 +395,17 @@ package com.anywebcam.mock
 			e.method('test').atMost( 2 );
 			
 			e.invoke( true );
-			assertTrue( e.verifyMessageReceived() );
+			assertTrue( e.verify() );
 			
 			e.invoke( true );
-			assertTrue( e.verifyMessageReceived() );
+			assertTrue( e.verify() );
 			
 			e.invoke( true );
-			try { e.verifyMessageReceived(); fail('Expecting MockExpectationError'); } 
+			try { e.verify(); fail('Expecting MockExpectationError'); } 
 			catch (error:MockExpectationError) { ;/* NOOP */ }
 
 			e.invoke( true );
-			try { e.verifyMessageReceived(); fail('Expecting MockExpectationError'); } 
+			try { e.verify(); fail('Expecting MockExpectationError'); } 
 			catch (error:MockExpectationError) { ;/* NOOP */ }
 		}
 		
@@ -415,17 +415,17 @@ package com.anywebcam.mock
 			e.method('test').atLeast( 2 ).atMost( 3 );
 			
 			e.invoke( true );
-			try { e.verifyMessageReceived(); fail('Expecting MockExpectationError'); } 
+			try { e.verify(); fail('Expecting MockExpectationError'); } 
 			catch (error:MockExpectationError) { ;/* NOOP */ }
 
 			e.invoke( true );
-			assertTrue( e.verifyMessageReceived() );
+			assertTrue( e.verify() );
 
 			e.invoke( true );
-			assertTrue( e.verifyMessageReceived() );
+			assertTrue( e.verify() );
 
 			e.invoke( true );
-			try { e.verifyMessageReceived(); fail('Expecting MockExpectationError'); } 
+			try { e.verify(); fail('Expecting MockExpectationError'); } 
 			catch (error:MockExpectationError) { ;/* NOOP */ }
 		}
 		
@@ -566,7 +566,7 @@ package com.anywebcam.mock
 			
 			try 
 			{
-				e.verifyMessageReceived();
+				e.verify();
 				fail('Expecting an UnmetMockExpectationError to be thrown');
 			}
 			catch( error:MockExpectationError ) 

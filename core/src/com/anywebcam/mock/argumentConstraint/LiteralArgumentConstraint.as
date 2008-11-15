@@ -7,6 +7,11 @@
 */
 package com.anywebcam.mock.argumentConstraint
 {
+	/**
+	 * Matches actual arguments to expected values using strict equality (===).
+	 * 
+	 * @private
+	 */
 	public class LiteralArgumentConstraint implements ArgumentConstraint
 	{
 		private var _value:Object;

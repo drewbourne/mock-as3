@@ -7,6 +7,11 @@
 */
 package com.anywebcam.mock.argumentConstraint
 {
+	/**
+	 * Matches if an argument is of type Boolean.
+	 *
+	 * @private
+	 */
 	public class BooleanArgumentConstraint implements ArgumentConstraint
 	{
 		public function BooleanArgumentConstraint( ignore:Object )

@@ -7,6 +7,11 @@
 */
 package com.anywebcam.mock.argumentConstraint
 {
+	/**
+	 * ArgumentConstraint that matches any value as an actual argument
+	 *
+	 * @private
+	 */
 	public class AnyArgumentConstraint implements ArgumentConstraint
 	{
 		public function AnyArgumentConstraint( ignore:Object )

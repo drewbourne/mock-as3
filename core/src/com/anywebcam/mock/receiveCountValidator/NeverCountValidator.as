@@ -5,7 +5,9 @@ package com.anywebcam.mock.receiveCountValidator
 	use namespace mock_internal;
 
 	/**
-	 * Receive Count Validator that throws a MockExpectationError on eligible() because the associated mockexpectation should never be called.
+	 * Receive Count Validator that throws a MockExpectationError on #eligible() because the associated MockExpectation should never be called.
+	 *	
+	 * @private
 	 */
 	public class NeverCountValidator implements ReceiveCountValidator
 	{
@@ -13,6 +15,9 @@ package com.anywebcam.mock.receiveCountValidator
 		
 		public var expectation:MockExpectation;
 		
+		/**
+		 * Constructor
+		 */
 		public function NeverCountValidator( expectation:MockExpectation )
 		{
 			this.expectation = expectation;
@@ -33,7 +38,7 @@ package com.anywebcam.mock.receiveCountValidator
 			return !_invoked;
 		}
 		
-		public function toString( n:int ):String 
+		public function describe( n:int ):String 
 		{
 			return 'never';
 		}

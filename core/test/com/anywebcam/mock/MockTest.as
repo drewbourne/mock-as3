@@ -321,7 +321,6 @@ package com.anywebcam.mock
 			mock = new Mock( new EventDispatcher() );
 			mock.method('methodName').withAnyArgs.once.andCall(function(...rest):void {
 				invoked = true;
-				trace('invokeMethod called:', rest);
 			});
 			
 			mock.invokeMethod('methodName', ['a', true, 3]);

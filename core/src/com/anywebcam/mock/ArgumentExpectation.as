@@ -11,6 +11,8 @@ package com.anywebcam.mock
 
 	/**
 	 * Manages constraints to place on arguments supplied to an expectation
+	 * 
+	 * @private
 	 */
 	public class ArgumentExpectation
 	{
