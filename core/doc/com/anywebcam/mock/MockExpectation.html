@@ -1,0 +1,1223 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="../../../style.css" type="text/css" media="screen">
+<link rel="stylesheet" href="../../../print.css" type="text/css" media="print">
+<meta content="MockExpectation,com.anywebcam.mock.MockExpectation,anyNumberOfTimes,name,never,once,twice,withAnyArgs,withNoArgs,zeroOrMoreTimes,andCall,andDispatchEvent,andReturn,andThrow,atLeast,atMost,calls,dispatchesEvent,exactly,invoke,method,ordered,property,returns,throws,times,toString,verify,withArgs" name="keywords">
+<title>com.anywebcam.mock.MockExpectation</title>
+</head>
+<body>
+<script type="text/javascript" language="javascript" src="../../../asdoc.js"></script><script type="text/javascript" language="javascript" src="../../../cookies.js"></script><script type="text/javascript" language="javascript">
+<!--
+				asdocTitle = 'MockExpectation - mock-as3 API Documentation';
+				var baseRef = '../../../';
+				window.onload = configPage;
+			--></script>
+<table style="display:none" id="titleTable" cellspacing="0" cellpadding="0" class="titleTable">
+<tr>
+<td align="left" class="titleTableTitle">mock-as3 API Documentation</td><td align="right" class="titleTableTopNav"><a onclick="loadClassListFrame('../../../all-classes.html')" href="../../../package-summary.html">All&nbsp;Packages</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../all-classes.html')" href="../../../class-summary.html">All&nbsp;Classes</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../index-list.html')" href="../../../all-index-A.html">Index</a>&nbsp;|&nbsp;<a href="../../../index.html?com/anywebcam/mock/MockExpectation.html&amp;com/anywebcam/mock/class-list.html" id="framesLink1">Frames</a><a onclick="parent.location=document.location" href="" style="display:none" id="noFramesLink1">No&nbsp;Frames</a></td><td rowspan="3" align="right" class="titleTableLogo"><img alt="Adobe Logo" title="Adobe Logo" class="logoImage" src="../../../images/logo.jpg"></td>
+</tr>
+<tr class="titleTableRow2">
+<td align="left" id="subTitle" class="titleTableSubTitle">Class&nbsp;MockExpectation</td><td align="right" id="subNav" class="titleTableSubNav"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a></td>
+</tr>
+<tr class="titleTableRow3">
+<td colspan="2">&nbsp;</td>
+</tr>
+</table>
+<script type="text/javascript" language="javascript">
+<!--
+if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Class MockExpectation"); titleBar_setSubNav(false,true,false,false,false,false,true,false,false,false,false,false,false,false);}
+--></script>
+<div class="MainContent">
+<table cellspacing="0" cellpadding="0" class="classHeaderTable">
+<tr>
+<td class="classHeaderTableLabel">Package</td><td><a onclick="javascript:loadClassListFrame('class-list.html')" href="package-detail.html">com.anywebcam.mock</a></td>
+</tr>
+<tr>
+<td class="classHeaderTableLabel">Class</td><td class="classSignature">public class MockExpectation</td>
+</tr>
+</table>
+<p></p>
+  Manages expectations of method or property calls.
+  <p></p>
+<br>
+<hr>
+</div>
+<a name="propertySummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Public Properties</div>
+<table id="summaryTableProperty" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Property</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#anyNumberOfTimes">anyNumberOfTimes</a> : <a href="../mock/MockExpectation.html">MockExpectation</a>
+<div class="summaryTableDescription">[read-only]
+   Set this expectation to expect to be called any number of times, alias of #atLeast(0).</div>
+</td><td class="summaryTableOwnerCol">MockExpectation</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#name">name</a> : String<div class="summaryTableDescription">
+   The name of the method or property this expectation relates to
+   </div>
+</td><td class="summaryTableOwnerCol">MockExpectation</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#never">never</a> : <a href="../mock/MockExpectation.html">MockExpectation</a>
+<div class="summaryTableDescription">[read-only]
+   Set this expectation to expect NOT to be called
+   
+   </div>
+</td><td class="summaryTableOwnerCol">MockExpectation</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#once">once</a> : <a href="../mock/MockExpectation.html">MockExpectation</a>
+<div class="summaryTableDescription">[read-only]
+   Set this expectation to expect to be called ONCE only.</div>
+</td><td class="summaryTableOwnerCol">MockExpectation</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#twice">twice</a> : <a href="../mock/MockExpectation.html">MockExpectation</a>
+<div class="summaryTableDescription">[read-only]
+   Set this expectation to expect to be called TWICE only.</div>
+</td><td class="summaryTableOwnerCol">MockExpectation</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#withAnyArgs">withAnyArgs</a> : <a href="../mock/MockExpectation.html">MockExpectation</a>
+<div class="summaryTableDescription">[read-only]
+   Set this expectation to accept any arguments
+   
+   </div>
+</td><td class="summaryTableOwnerCol">MockExpectation</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#withNoArgs">withNoArgs</a> : <a href="../mock/MockExpectation.html">MockExpectation</a>
+<div class="summaryTableDescription">[read-only]
+   Set this expectation to accept no arguments
+   
+   </div>
+</td><td class="summaryTableOwnerCol">MockExpectation</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#zeroOrMoreTimes">zeroOrMoreTimes</a> : <a href="../mock/MockExpectation.html">MockExpectation</a>
+<div class="summaryTableDescription">[read-only]
+   Set this expectation to expect to be called zero or more times, alias of #anyNumberOfTimes, alias of #atLeast(0).</div>
+</td><td class="summaryTableOwnerCol">MockExpectation</td>
+</tr>
+</table>
+</div>
+<a name="methodSummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Public Methods</div>
+<table id="summaryTableMethod" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Method</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#MockExpectation()">MockExpectation</a>(mock:<a href="Mock.html">Mock</a>)</div>
+<div class="summaryTableDescription">
+   Constructor
+   
+   </div>
+</td><td class="summaryTableOwnerCol">MockExpectation</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#andCall()">andCall</a>(func:Function):<a href="../mock/MockExpectation.html">MockExpectation</a>
+</div>
+<div class="summaryTableDescription">
+   Set the supplied function to be called when the expectation is calls
+   
+   </div>
+</td><td class="summaryTableOwnerCol">MockExpectation</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#andDispatchEvent()">andDispatchEvent</a>(event:Event, delay:Number = 0):<a href="../mock/MockExpectation.html">MockExpectation</a>
+</div>
+<div class="summaryTableDescription">
+   Set the supplied event to be dispatched when the expectation is called, alias of #dispatchesEvent()
+   
+   </div>
+</td><td class="summaryTableOwnerCol">MockExpectation</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#andReturn()">andReturn</a>(... rest):<a href="../mock/MockExpectation.html">MockExpectation</a>
+</div>
+<div class="summaryTableDescription">
+   Set a single or sequence of return values, alias of #returns()
+   
+   </div>
+</td><td class="summaryTableOwnerCol">MockExpectation</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#andThrow()">andThrow</a>(error:Error):<a href="../mock/MockExpectation.html">MockExpectation</a>
+</div>
+<div class="summaryTableDescription">
+   Set an error to be thrown, alias of #throws()
+   
+   </div>
+</td><td class="summaryTableOwnerCol">MockExpectation</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#atLeast()">atLeast</a>(count:int):<a href="../mock/MockExpectation.html">MockExpectation</a>
+</div>
+<div class="summaryTableDescription">
+   Set this expectation to expect to be called at least the supplied number of times
+      </div>
+</td><td class="summaryTableOwnerCol">MockExpectation</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#atMost()">atMost</a>(count:int):<a href="../mock/MockExpectation.html">MockExpectation</a>
+</div>
+<div class="summaryTableDescription">
+   Set this expectation to expect to be called at most the supplied number of times
+   
+   </div>
+</td><td class="summaryTableOwnerCol">MockExpectation</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#calls()">calls</a>(func:Function):<a href="../mock/MockExpectation.html">MockExpectation</a>
+</div>
+<div class="summaryTableDescription">
+   Set the supplied function to be called when the expectation is called, alias of andCall()
+   
+   </div>
+</td><td class="summaryTableOwnerCol">MockExpectation</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#dispatchesEvent()">dispatchesEvent</a>(event:Event, delay:Number = 0):<a href="../mock/MockExpectation.html">MockExpectation</a>
+</div>
+<div class="summaryTableDescription">
+   Set the supplied event to be dispatched when the expectation is called, alias of #andDispatchEvent()
+   
+   </div>
+</td><td class="summaryTableOwnerCol">MockExpectation</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#exactly()">exactly</a>(count:int):<a href="../mock/MockExpectation.html">MockExpectation</a>
+</div>
+<div class="summaryTableDescription">
+   Set this expectation to expect to be called exactly the supplied number of times, alias of #times().</div>
+</td><td class="summaryTableOwnerCol">MockExpectation</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#method()">method</a>(methodName:String):<a href="../mock/MockExpectation.html">MockExpectation</a>
+</div>
+<div class="summaryTableDescription">
+   Set this expectation to be a method with the supplied name
+   
+   </div>
+</td><td class="summaryTableOwnerCol">MockExpectation</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#ordered()">ordered</a>():<a href="../mock/MockExpectation.html">MockExpectation</a>
+</div>
+<div class="summaryTableDescription">
+   Indicate that this method should be called in order with other expectations marked by #ordered()
+   
+   </div>
+</td><td class="summaryTableOwnerCol">MockExpectation</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#property()">property</a>(propertyName:String):<a href="../mock/MockExpectation.html">MockExpectation</a>
+</div>
+<div class="summaryTableDescription">
+   Set this expectation to be a property with the supplied name
+   
+   </div>
+</td><td class="summaryTableOwnerCol">MockExpectation</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#returns()">returns</a>(... rest):<a href="../mock/MockExpectation.html">MockExpectation</a>
+</div>
+<div class="summaryTableDescription">
+   Set a single or sequence of return values, alias of #andReturn()
+   
+   </div>
+</td><td class="summaryTableOwnerCol">MockExpectation</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#throws()">throws</a>(error:Error):<a href="../mock/MockExpectation.html">MockExpectation</a>
+</div>
+<div class="summaryTableDescription">
+   Set an error to be thrown, alias of #andThrow()
+   
+   </div>
+</td><td class="summaryTableOwnerCol">MockExpectation</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#times()">times</a>(count:int = -1):<a href="../mock/MockExpectation.html">MockExpectation</a>
+</div>
+<div class="summaryTableDescription">
+   Set this expectation to expect to be called the supplied number of times
+      </div>
+</td><td class="summaryTableOwnerCol">MockExpectation</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#toString()">toString</a>():String</div>
+<div class="summaryTableDescription"></div>
+</td><td class="summaryTableOwnerCol">MockExpectation</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#verify()">verify</a>():Boolean</div>
+<div class="summaryTableDescription">
+   Verify this expectation has had it's expectations met.</div>
+</td><td class="summaryTableOwnerCol">MockExpectation</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#withArgs()">withArgs</a>(... rest):<a href="../mock/MockExpectation.html">MockExpectation</a>
+</div>
+<div class="summaryTableDescription">
+   Set this expectation to accept the supplied arguments or constraints
+   
+   </div>
+</td><td class="summaryTableOwnerCol">MockExpectation</td>
+</tr>
+</table>
+</div>
+<script type="text/javascript" language="javascript">
+<!--
+showHideInherited();
+--></script>
+<div class="MainContent">
+<a name="propertyDetail"></a>
+<div class="detailSectionHeader">Property detail</div>
+<a name="anyNumberOfTimes"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">anyNumberOfTimes</td><td class="detailHeaderType">property</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>anyNumberOfTimes:<a href="../mock/MockExpectation.html">MockExpectation</a></code>&nbsp;&nbsp;[read-only]<p>
+   Set this expectation to expect to be called any number of times, alias of #atLeast(0).
+      </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get anyNumberOfTimes():<a href="../mock/MockExpectation.html">MockExpectation</a></code>
+<br>
+<br>
+<span class="label">Example</span>
+<br>   <div class='listing'><pre>
+   mock.method('youMightCall').anyNumberOfTimes;
+   
+   mock.youMightCall();
+   mock.verify();
+   </pre></div>
+   <p></p>
+</div>
+<a name="name"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">name</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>name:String</code>&nbsp;&nbsp;[read-write]<p>
+   The name of the method or property this expectation relates to
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get name():String</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set name(value:String):void</code>
+<br>
+</div>
+<a name="never"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">never</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>never:<a href="../mock/MockExpectation.html">MockExpectation</a></code>&nbsp;&nbsp;[read-only]<p>
+   Set this expectation to expect NOT to be called
+   
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get never():<a href="../mock/MockExpectation.html">MockExpectation</a></code>
+<br>
+<br>
+<span class="label">Example</span>
+<br>   <div class='listing'><pre>
+   mock.method('doNotCall').never;
+   
+   // mock.doNotCall();
+   mock.verify();
+   </pre></div>
+   <p></p>
+</div>
+<a name="once"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">once</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>once:<a href="../mock/MockExpectation.html">MockExpectation</a></code>&nbsp;&nbsp;[read-only]<p>
+   Set this expectation to expect to be called ONCE only.
+   
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get once():<a href="../mock/MockExpectation.html">MockExpectation</a></code>
+<br>
+<br>
+<span class="label">Example</span>
+<br>   <div class='listing'><pre>
+   mock.method('singular').once;
+   
+   mock.singular();
+   mock.verify();
+   </pre></div>
+   <p></p>
+</div>
+<a name="twice"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">twice</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>twice:<a href="../mock/MockExpectation.html">MockExpectation</a></code>&nbsp;&nbsp;[read-only]<p>
+   Set this expectation to expect to be called TWICE only.
+   
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get twice():<a href="../mock/MockExpectation.html">MockExpectation</a></code>
+<br>
+<br>
+<span class="label">Example</span>
+<br>   <div class='listing'><pre>
+   mock.method('toothy').twice;
+   
+   mock.toothy();
+   mock.toothy();
+   mock.verify();
+   </pre></div>
+   <p></p>
+</div>
+<a name="withAnyArgs"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">withAnyArgs</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>withAnyArgs:<a href="../mock/MockExpectation.html">MockExpectation</a></code>&nbsp;&nbsp;[read-only]<p>
+   Set this expectation to accept any arguments
+   
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get withAnyArgs():<a href="../mock/MockExpectation.html">MockExpectation</a></code>
+<br>
+<br>
+<span class="label">Example</span>
+<br>
+   <div class='listing'><pre>
+   mock.method('eat').withAnyArgs;
+   
+   mock.eat(1, new Waffle(), { toppings: ['Syrup', 'IceCream'] });
+   mock.verify();
+   </pre></div>
+   <p></p>
+</div>
+<a name="withNoArgs"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">withNoArgs</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>withNoArgs:<a href="../mock/MockExpectation.html">MockExpectation</a></code>&nbsp;&nbsp;[read-only]<p>
+   Set this expectation to accept no arguments
+   
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get withNoArgs():<a href="../mock/MockExpectation.html">MockExpectation</a></code>
+<br>
+<br>
+<span class="label">Example</span>
+<br>
+   <div class='listing'><pre>
+   mock.method('cook').withNoArgs;
+   
+   mock.cook();
+   mock.verify();
+   </pre></div>
+   <p></p>
+</div>
+<a name="zeroOrMoreTimes"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">zeroOrMoreTimes</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>zeroOrMoreTimes:<a href="../mock/MockExpectation.html">MockExpectation</a></code>&nbsp;&nbsp;[read-only]<p>
+   Set this expectation to expect to be called zero or more times, alias of #anyNumberOfTimes, alias of #atLeast(0).
+   
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get zeroOrMoreTimes():<a href="../mock/MockExpectation.html">MockExpectation</a></code>
+<br>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../mock/MockExpectation.html#anyNumberOfTimes" target="">anyNumberOfTimes</a>
+</div>
+<br>
+<span class="label">Example</span>
+<br>   <div class='listing'><pre>
+   mock.method('youMightCall').zeroOrMoreTimes;
+   
+   mock.youMightCall();
+   mock.verify();
+   </pre></div>
+   <p></p>
+</div>
+<a name="constructorDetail"></a>
+<div class="detailSectionHeader">Constructor detail</div>
+<a name="MockExpectation()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">MockExpectation</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">constructor</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function MockExpectation(mock:<a href="Mock.html">Mock</a>)</code><p>
+   Constructor
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">mock</span>:<a href="Mock.html">Mock</a></code> &mdash; The parent Mock object this expectation is set on
+   </td>
+</tr>
+</table>
+</div>
+<a name="methodDetail"></a>
+<div class="detailSectionHeader">Method detail</div>
+<a name="andCall()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">andCall</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function andCall(func:Function):<a href="../mock/MockExpectation.html">MockExpectation</a></code><p>
+   Set the supplied function to be called when the expectation is calls
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">func</span>:Function</code></td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../mock/MockExpectation.html">MockExpectation</a></code></td>
+</tr>
+</table>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../mock/MockExpectation.html#calls" target="">calls</a>
+</div>
+</div>
+<a name="andDispatchEvent()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">andDispatchEvent</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function andDispatchEvent(event:Event, delay:Number = 0):<a href="../mock/MockExpectation.html">MockExpectation</a></code><p>
+   Set the supplied event to be dispatched when the expectation is called, alias of #dispatchesEvent()
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">event</span>:Event</code></td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">delay</span>:Number</code> (default = <code>0</code>)<code></code></td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../mock/MockExpectation.html">MockExpectation</a></code></td>
+</tr>
+</table>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../mock/MockExpectation.html#dispatchesEvent" target="">dispatchesEvent</a>
+</div>
+</div>
+<a name="andReturn()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">andReturn</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function andReturn(... rest):<a href="../mock/MockExpectation.html">MockExpectation</a></code><p>
+   Set a single or sequence of return values, alias of #returns()
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code>... <span class="label">rest</span></code></td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../mock/MockExpectation.html">MockExpectation</a></code></td>
+</tr>
+</table>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../mock/MockExpectation.html#returns" target="">returns</a>
+</div>
+</div>
+<a name="andThrow()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">andThrow</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function andThrow(error:Error):<a href="../mock/MockExpectation.html">MockExpectation</a></code><p>
+   Set an error to be thrown, alias of #throws()
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">error</span>:Error</code></td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../mock/MockExpectation.html">MockExpectation</a></code></td>
+</tr>
+</table>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../mock/MockExpectation.html#throws" target="">throws</a>
+</div>
+</div>
+<a name="atLeast()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">atLeast</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function atLeast(count:int):<a href="../mock/MockExpectation.html">MockExpectation</a></code><p>
+   Set this expectation to expect to be called at least the supplied number of times
+      </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">count</span>:int</code></td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../mock/MockExpectation.html">MockExpectation</a></code></td>
+</tr>
+</table>
+<br>
+<span class="label">Example</span>
+<br>   <div class='listing'><pre>
+   mock.method('oneOrMore').atLeast(1);
+   
+   mock.oneOrMore();
+   mock.oneOrMore();
+   mock.verify();
+   </pre></div>
+   <p></p>
+</div>
+<a name="atMost()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">atMost</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function atMost(count:int):<a href="../mock/MockExpectation.html">MockExpectation</a></code><p>
+   Set this expectation to expect to be called at most the supplied number of times
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">count</span>:int</code></td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../mock/MockExpectation.html">MockExpectation</a></code></td>
+</tr>
+</table>
+<br>
+<span class="label">Example</span>
+<br>   <div class='listing'><pre>
+   mock.method('thricePerhaps').atMost(3);
+   
+   mock.thricePerhaps();
+   mock.thricePerhaps();
+   mock.verify();
+   </pre></div>
+   <p></p>
+</div>
+<a name="calls()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">calls</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function calls(func:Function):<a href="../mock/MockExpectation.html">MockExpectation</a></code><p>
+   Set the supplied function to be called when the expectation is called, alias of andCall()
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">func</span>:Function</code></td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../mock/MockExpectation.html">MockExpectation</a></code></td>
+</tr>
+</table>
+<br>
+<span class="label">Example</span>
+<br>
+   <div class='listing'><pre>
+   mock.method('doSomeWork').calls(function():void {
+    trace('doing some work');
+   });
+   
+   mock.doSomeWork();
+   // 'doing some work'
+   
+   mock.method('doMoreWork').withArgs(1, 2).calls(function(a:Number, b:Number):void {
+    trace('doing more work', a, b);
+   });
+   
+   mock.doMoreWork(1, 2);
+   // 'doing more work 1 2'
+   
+   mock.verify();
+   </pre></div>
+   <p></p>
+</div>
+<a name="dispatchesEvent()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">dispatchesEvent</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function dispatchesEvent(event:Event, delay:Number = 0):<a href="../mock/MockExpectation.html">MockExpectation</a></code><p>
+   Set the supplied event to be dispatched when the expectation is called, alias of #andDispatchEvent()
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">event</span>:Event</code></td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">delay</span>:Number</code> (default = <code>0</code>)<code></code></td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../mock/MockExpectation.html">MockExpectation</a></code></td>
+</tr>
+</table>
+<br>
+<span class="label">Example</span>
+<br>   <div class='listing'><pre>
+   mock.method('changeValue').dispatchesEvent(new Event(Event.CHANGE));
+   mock.method('changeValueLater').dispatchesEvent(new Event(Event.CHANGE), 1000);
+   
+   mock.addEventListener(Event.CHANGE, addAsync(function(event:Event):void {
+    trace('changed');
+   }, 2000));
+   
+   mock.changeValue();
+   mock.changeValueLater();
+   </pre></div>
+   <p></p>
+</div>
+<a name="exactly()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">exactly</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function exactly(count:int):<a href="../mock/MockExpectation.html">MockExpectation</a></code><p>
+   Set this expectation to expect to be called exactly the supplied number of times, alias of #times().
+      </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">count</span>:int</code></td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../mock/MockExpectation.html">MockExpectation</a></code></td>
+</tr>
+</table>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../mock/MockExpectation.html#times" target="">times</a>
+</div>
+<br>
+<span class="label">Example</span>
+<br>   <div class='listing'><pre>
+   mock.method('save').exactly(1);
+   
+   mock.save();
+   mock.verify();
+   </pre></div>
+   <p></p>
+</div>
+<a name="invoke()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">invoke</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>mock_internal function invoke(invokedAsMethod:Boolean, args:Array = null):*</code><p>
+   Invoke the expectation, checking its called the right way, with the correct arguments, and return any expected value
+      </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">invokedAsMethod</span>:Boolean</code></td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">args</span>:Array</code> (default = <code>null</code>)<code></code></td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>*</code></td>
+</tr>
+</table>
+<br>
+<span class="label">Throws</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code></code> &mdash; if invoked as a method and not a method
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20"></td><td><code></code> &mdash; if invoked as a property and is a method
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20"></td><td><code></code> &mdash; if args do not match
+   </td>
+</tr>
+</table>
+</div>
+<a name="method()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">method</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function method(methodName:String):<a href="../mock/MockExpectation.html">MockExpectation</a></code><p>
+   Set this expectation to be a method with the supplied name
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">methodName</span>:String</code> &mdash; The name of the method
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../mock/MockExpectation.html">MockExpectation</a></code> &mdash; 
+                        MockExpectation
+   
+                        
+                     </td>
+</tr>
+</table>
+<br>
+<span class="label">Example</span>
+<br>
+   <div class='listing'><pre>
+   mock.method('cook');
+   
+   mock.cook();
+   mock.verify();
+   </pre></div>
+   <p></p>
+</div>
+<a name="ordered()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">ordered</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function ordered():<a href="../mock/MockExpectation.html">MockExpectation</a></code><p>
+   Indicate that this method should be called in order with other expectations marked by #ordered()
+   
+   </p><p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../mock/MockExpectation.html">MockExpectation</a></code></td>
+</tr>
+</table>
+<br>
+<span class="label">Example</span>
+<br>   <div class='listing'><pre>
+   mock.method('one').ordered();
+   mock.method('anyOrder').anyNumberOfTimes;
+   mock.method('two').ordered();
+   
+   mock.one();
+   mock.anyOrder();
+   mock.anyOrder();
+   mock.two();
+   mock.anyOrder();
+   mock.verify();
+   </pre></div>
+   <p></p>
+</div>
+<a name="property()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">property</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function property(propertyName:String):<a href="../mock/MockExpectation.html">MockExpectation</a></code><p>
+   Set this expectation to be a property with the supplied name
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">propertyName</span>:String</code> &mdash; The name of the property
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../mock/MockExpectation.html">MockExpectation</a></code> &mdash; 
+                        MockExpectation
+   
+                        
+                     </td>
+</tr>
+</table>
+<br>
+<span class="label">Example</span>
+<br>
+   <div class='listing'><pre>
+   mock.property('hungry');
+   
+   mock.hungry = true;
+   mock.verify();
+   </pre></div>
+   <p></p>
+</div>
+<a name="returns()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">returns</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function returns(... rest):<a href="../mock/MockExpectation.html">MockExpectation</a></code><p>
+   Set a single or sequence of return values, alias of #andReturn()
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code>... <span class="label">rest</span></code></td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../mock/MockExpectation.html">MockExpectation</a></code></td>
+</tr>
+</table>
+<br>
+<span class="label">Example</span>
+<br>
+   <div class='listing'><pre>
+   mock.method('ten').returns(10);
+   
+   // mock#ten() will always return 10
+   assertEquals(10, mock.ten());
+   assertEquals(10, mock.ten());
+   assertEquals(10, mock.ten());
+   
+   mock.method('next').returns(1, 2, 3);
+   
+   // mock#next() will return the values in sequence and then repeat the last value
+   assertEquals(1, mock.next());
+   assertEquals(2, mock.next());
+   assertEquals(3, mock.next());
+   assertEquals(3, mock.next());
+   assertEquals(3, mock.next());
+   mock.verify();
+   </pre></div>
+   <p></p>
+</div>
+<a name="throws()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">throws</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function throws(error:Error):<a href="../mock/MockExpectation.html">MockExpectation</a></code><p>
+   Set an error to be thrown, alias of #andThrow()
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">error</span>:Error</code></td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../mock/MockExpectation.html">MockExpectation</a></code></td>
+</tr>
+</table>
+<br>
+<span class="label">Example</span>
+<br>
+   <div class='listing'><pre>
+   mock.method('generateError').throws(new IllegalArgumentError('Oh noes!'));
+   try {
+    mock.generateError();
+    fail('did not throw expected error');
+   } catch (error:IllegalArgumentError) {
+    ; // expected
+   }
+   mock.verify();
+   </pre></div>
+   <p></p>
+</div>
+<a name="times()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">times</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function times(count:int = -1):<a href="../mock/MockExpectation.html">MockExpectation</a></code><p>
+   Set this expectation to expect to be called the supplied number of times
+      </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">count</span>:int</code> (default = <code>-1</code>)<code></code></td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../mock/MockExpectation.html">MockExpectation</a></code></td>
+</tr>
+</table>
+<br>
+<span class="label">Example</span>
+<br>   <div class='listing'><pre>
+   mock.method('one').times(3);
+   
+   mock.one();
+   mock.one();
+   mock.one();
+   mock.verify();
+   </pre></div>
+   <p></p>
+</div>
+<a name="toString()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">toString</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function toString():String</code>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>String</code></td>
+</tr>
+</table>
+</div>
+<a name="verify()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">verify</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function verify():Boolean</code><p>
+   Verify this expectation has had it's expectations met.
+      </p><p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>Boolean</code> &mdash; true if this expectation is fulfilled
+   </td>
+</tr>
+</table>
+<br>
+<span class="label">Throws</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code></code> &mdash; if the set expectations were not met
+   </td>
+</tr>
+</table>
+</div>
+<a name="withArgs()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">withArgs</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function withArgs(... rest):<a href="../mock/MockExpectation.html">MockExpectation</a></code><p>
+   Set this expectation to accept the supplied arguments or constraints
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code>... <span class="label">rest</span></code></td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../mock/MockExpectation.html">MockExpectation</a></code></td>
+</tr>
+</table>
+<br>
+<span class="label">Example</span>
+<br>
+   <div class='listing'><pre>
+   mock.method('cook').withNoArgs;
+   
+   mock.cook();
+   mock.verify();
+   </pre></div>
+   <p></p>
+</div>
+<br>
+<br>
+<hr>
+<br>
+<p></p>
+<center class="copyright"> 
+</center>
+</div>
+</body>
+</html>
+<!-- -->

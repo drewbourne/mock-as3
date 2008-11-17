@@ -17,7 +17,74 @@ package com.anywebcam.mock
 	use namespace mock_internal;
 	
 	/**
+	 * Mock and MockExpectation provide the core API of mock-as3. 
 	 * 
+	 * @see MockExpectation MockExpectation for examples of how to set various expectations.
+	 * @example In general usage an instance of Mock will be created and used to specify which methods and properties are expected to be called on an object.
+ 	 * <listing version="3.0">
+	 *  // set an expectation
+	 *  mock.method('hello').withArgs(String).andReturn('hi!').once;
+	 *  // call the method
+	 *  mock.hello('with a string');
+	 *  // check that all the expectations were met
+	 *  mock.verify();
+	 * </listing>
+	 * 
+	 * @example In order to make Mock Objects work as stand-ins for real objects they need to implement an interface or extend a class and override every method. Here we are going to create a Mock IImageEncoder because we want to test another object that uses an IImageEncoder instead of testing the actual encoding.
+	 * <listing version="3.0">
+	 *  package {
+	 * 
+	 * 	  import com.anywebcam.mock.Mock;
+	 *    import flash.display.BitmapData;
+	 *    import flash.utils.ByteArray;
+	 *    import mx.graphics.codec.IImageEncoder;
+	 * 
+	 *    public class MockImageEncoder implements IImageEncoder {
+	 *      public var mock:Mock;
+	 * 
+	 *      public function MockImageEncoder() {
+	 *        mock = new Mock();
+	 *      }
+	 * 
+	 *      public function get contentType():String {
+	 *        return mock.contentType;
+	 *      }
+	 * 
+	 *      public function encode(bitmapData:BitmapData):ByteArray {
+	 *        return mock.encode(bitmapData);
+	 *      }
+	 *    
+	 *      public function encodeByteArray(byteArray:ByteArray, width:int, height:int, transparent:Boolean = true):ByteArray {
+	 *        return mock.encodeByteArray(byteArray, width, height, transparent);
+	 *      }
+	 *    }
+	 *  }
+	 * </listing>
+	 * 
+	 * Now we can use our MockImageEncoder in our tests.
+	 * 
+	 * <listing version="3.0">
+	 *  public function testGrabsImageAndCallEncode():void {
+	 * 
+	 *    // create the data our class under test will use
+	 *    var sprite:Sprite = new Sprite();
+	 *    var bytes:ByteArray = new ByteArray();
+	 *    var imageEncoder:MockImageEncoder = new MockImageEncoder();
+	 *    
+	 *    // set expectations for the mocks
+	 *    imageEncoder.mock.method('encode').withArgs(BitmapData).andReturn(bytes);
+	 *    
+	 *    // test our class
+	 *    var screenGrabber:ScreenGrabber = new ScreenGrabber(sprite, imageEncoder);
+	 *    var encoded:ByteArray = screenGrabber.grab();
+	 * 
+	 *    // check results
+	 *    assertEquals("expecting screenGrabber to return the ByteArray from imageEncoder", bytes, encoded);
+	 * 
+	 *    // check mock expectations were met
+	 *    imageEncoder.mock.verify();
+	 *  }
+	 * </listing>
 	 */
 	dynamic public class Mock extends Proxy implements IEventDispatcher
 	{

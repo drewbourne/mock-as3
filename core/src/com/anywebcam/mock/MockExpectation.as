@@ -571,26 +571,25 @@ package com.anywebcam.mock
 		}
 		
 		/**
-		 * Set a single or sequence of return values, alias of #andReturn
+		 * Set a single or sequence of return values, alias of #andReturn()
 		 *	
 		 * @example 
 		 * <listing version="3.0">
 		 *	mock.method('ten').returns(10);
 		 *	
-		 *	// #ten() will always return 10
+		 *	// mock#ten() will always return 10
 		 *	assertEquals(10, mock.ten());
 		 *	assertEquals(10, mock.ten());
 		 *	assertEquals(10, mock.ten());
 		 *	
-		 *	mock.method('nextFib').returns(1, 1, 2, 3);
+		 *	mock.method('next').returns(1, 2, 3);
 		 *	
-		 *	// #nextFib will return the values in sequence and then repeat the last value
-		 *	assertEquals(1, mock.nextFib());
-		 *	assertEquals(1, mock.nextFib());
-		 *	assertEquals(2, mock.nextFib());
-		 *	assertEquals(3, mock.nextFib());
-		 *	assertEquals(3, mock.nextFib());
-		 *	assertEquals(3, mock.nextFib());
+		 *	// mock#next() will return the values in sequence and then repeat the last value
+		 *	assertEquals(1, mock.next());
+		 *	assertEquals(2, mock.next());
+		 *	assertEquals(3, mock.next());
+		 *	assertEquals(3, mock.next());
+		 *	assertEquals(3, mock.next());
 		 *	mock.verify();
 		 * </listing>
 		 */
@@ -600,7 +599,7 @@ package com.anywebcam.mock
 		}
 		
 		/**
-		 * Set a single or sequence of return values, alias of #returns
+		 * Set a single or sequence of return values, alias of #returns()
 		 *	
 		 * @see #returns
 		 */
@@ -610,7 +609,7 @@ package com.anywebcam.mock
 		}
 		
 		/**
-		 * Set an error to be thrown, alias of andThrow()
+		 * Set an error to be thrown, alias of #andThrow()
 		 *	
 		 * @example 
 		 * <listing version="3.0">
@@ -630,7 +629,7 @@ package com.anywebcam.mock
 		}
 		
 		/**
-		 * Set an error to be thrown, alias of throws()
+		 * Set an error to be thrown, alias of #throws()
 		 *	
 		 * @see #throws
 		 */
@@ -677,7 +676,7 @@ package com.anywebcam.mock
 		}
 		
 		/**
-		 * Set the supplied event to be dispatched when the expectation is called, alias of andDispatchEvent()
+		 * Set the supplied event to be dispatched when the expectation is called, alias of #andDispatchEvent()
 		 *	
 		 * @example
 		 * <listing version="3.0">
@@ -698,7 +697,7 @@ package com.anywebcam.mock
 		}
 		
 		/**
-		 * Set the supplied event to be dispatched when the expectation is called, alias of dispatchesEvent()
+		 * Set the supplied event to be dispatched when the expectation is called, alias of #dispatchesEvent()
 		 *	
 		 * @see #dispatchesEvent
 		 */
@@ -758,10 +757,8 @@ package com.anywebcam.mock
 		}
 		
 		/**
-		 * Set this expectation to expect to be called exactly the supplied number of times
+		 * Set this expectation to expect to be called exactly the supplied number of times, alias of #times().
 		 *
-		 * <p>Alias of #times</p>
-		 * 
 		 * @see #times
 		 * @example
 		 * <listing version="3.0">
@@ -811,9 +808,7 @@ package com.anywebcam.mock
 		}
 		
 		/**
-		 * Set this expectation to expect to be called any number of times
-		 *
-		 * <p>Alias of atLeast(0)</p>
+		 * Set this expectation to expect to be called any number of times, alias of #atLeast(0).
 		 *
 		 * @example
 		 * <listing version="3.0">
@@ -829,11 +824,8 @@ package com.anywebcam.mock
 		}
 		
 		/**
-		 * Set this expectation to expect to be called zero or more times. 
+		 * Set this expectation to expect to be called zero or more times, alias of #anyNumberOfTimes, alias of #atLeast(0).
 		 *	
-		 * <p>Alias of #anyNumberOfTimes</p>
-		 * <p>Alias of atLeast(0)</p>
-		 * 
 		 * @see #anyNumberOfTimes
 		 * @example
 		 * <listing version="3.0">

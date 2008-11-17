@@ -12,11 +12,18 @@
 	
 	<mx:Script>
 		<![CDATA[
+		    
+		    import flexunit.framework.*;
 			import com.anywebcam.mock.*;
+			import mockas3.*;
 
 			private function onCreationComplete():void
 			{
- 				testRunner.test = MockFrameworkTest.suite();
+			    var suite:TestSuite = new TestSuite();
+			    suite.addTest( MockFrameworkTest.suite() );
+    			suite.addTest( new TestSuite( MockAS3Test ) );
+    			
+ 				testRunner.test = suite;
  				testRunner.startTest();
  			}			
 		]]>

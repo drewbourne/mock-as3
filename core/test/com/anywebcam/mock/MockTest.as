@@ -325,6 +325,15 @@ package com.anywebcam.mock
 			
 			mock.invokeMethod('methodName', ['a', true, 3]);
 		}
+		
+		public function testVerifyAll():void {
+			
+			var m1:Mock = new Mock(new EventDispatcher());
+			var m2:Mock = new Mock(new EventDispatcher());
+			
+			//Mock.verify(m1, m2);
+			fail('not implemented yet');
+		}
 	}
 }
 
