@@ -88,13 +88,34 @@ package com.anywebcam.mock
 	 */
 	dynamic public class Mock extends Proxy implements IEventDispatcher
 	{
+	  /**
+	   * 
+	   * @example
+	   * <listing version="3.0">
+	   *  public function testWithLotsOfMocks():void {
+	   *    var m1:Mock = new Mock();
+	   *    var m2:Mock = new Mock();
+	   *    var m2:Mock = new Mock();
+	   * 
+	   *    // test something using the mocks
+	   * 
+	   *    Mock.verify(m1, m2, m3);
+	   *  }
+	   * </listing>
+	   */ 
+	  public static function verify(...mocks):void {
+	    mocks.forEach(function(mock:Mock, i:int, a:Array):void {
+	      mock.verify();
+	    });
+	  }
+	  
 		/**
 		 * Constructor
 		 * 
 		 * @param target The target that is delegating calls to this Mock
 		 * @param ignoreMissing Indicates whether methods and properties without expectations are ignored
 		 */
-		public function Mock( target:Object=null, ignoreMissing:Boolean = false )
+		public function Mock( target:Object = null, ignoreMissing:Boolean = false )
 		{
 			_target = target;
 			_expectations = [];

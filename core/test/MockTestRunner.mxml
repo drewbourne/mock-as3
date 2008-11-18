@@ -19,11 +19,7 @@
 
 			private function onCreationComplete():void
 			{
-			    var suite:TestSuite = new TestSuite();
-			    suite.addTest( MockFrameworkTest.suite() );
-    			suite.addTest( new TestSuite( MockAS3Test ) );
-    			
- 				testRunner.test = suite;
+ 				testRunner.test = MockFrameworkTest.suite();
  				testRunner.startTest();
  			}			
 		]]>

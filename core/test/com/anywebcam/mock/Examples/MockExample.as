@@ -35,8 +35,6 @@ package com.anywebcam.mock.examples
 
 		public function callWithRest(...rest):void
 		{
-			// FIXME which is cleaner from a user perspective?
-			// mock.callWithRest.apply(mock, rest);*/
 			mock.invokeMethod('callWithRest', rest);
 		}
 

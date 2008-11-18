@@ -326,13 +326,22 @@ package com.anywebcam.mock
 			mock.invokeMethod('methodName', ['a', true, 3]);
 		}
 		
-		public function testVerifyAll():void {
+		public function testMockVerify():void {
 			
 			var m1:Mock = new Mock(new EventDispatcher());
 			var m2:Mock = new Mock(new EventDispatcher());
 			
-			//Mock.verify(m1, m2);
-			fail('not implemented yet');
+      Mock.verify(m1, m2);
+		}
+		
+		public function testMockVerifyWithWrongParameters():void {
+		  
+		  try {
+		    Mock.verify(true, "oh no", null);
+		    fail('expecting TypeError');
+		  } catch (error:TypeError) {
+		    ; // expecting TypeError due to arguments being Mock
+		  }
 		}
 	}
 }
