@@ -1,28 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Application 
-	xmlns:mx="http://www.adobe.com/2006/mxml" 
-	xmlns="*"
-	xmlns:flexunit="flexunit.flexui.*"
-	creationComplete="onCreationComplete()">
+    styleName="flexUnitApplication"
+    creationComplete="runMe()"
+    xmlns:flexui="org.flexunit.flexui.*"
+    xmlns:mx="http://www.adobe.com/2006/mxml"
+    >
 
-	<flexunit:TestRunnerBase 
-		id="testRunner" 
-		width="100%" height="100%" 
-		/>
-	
-	<mx:Script>
-		<![CDATA[
+    <mx:Script>
+        <![CDATA[
+		    import com.anywebcam.mock.*;
+		    import com.anywebcam.mock.runner.*;
 		    
-		    import flexunit.framework.*;
-			import com.anywebcam.mock.*;
-			import mockas3.*;
+            import org.flexunit.listeners.UIListener;
+            import org.flexunit.runner.FlexUnitCore;
 
-			private function onCreationComplete():void
-			{
- 				testRunner.test = MockFrameworkTest.suite();
- 				testRunner.startTest();
- 			}			
-		]]>
-	</mx:Script>
-		
+            private var core:FlexUnitCore;
+            
+            // need to import the Class to support [RunWith("com.anywebcam.mock.runner.MockRunner")]
+            private var runner:MockRunner;
+
+            public function runMe():void
+            {
+                core = new FlexUnitCore();
+                core.addListener(new UIListener(uiListener));
+                core.run(
+                    MockFrameworkTest, 
+                    MockRunnerExample
+                    );
+            }
+        ]]>
+    </mx:Script>
+
+    <mx:Style>
+        Application {
+               backgroundColor: #3872b2;
+               backgroundGradientColors: #3872b2, #0c1a3d;
+               backgroundGradientAlphas: 1, 1;
+               themeColor: #ffffff;
+               color: #444444;
+               fontFamily: "Myriad Pro Semibold";
+               fontSize: 12;
+            }
+    </mx:Style>
+
+    <flexui:TestRunnerBase 
+        id="uiListener"
+        width="100%"
+        height="100%"
+        />
+
 </mx:Application>
