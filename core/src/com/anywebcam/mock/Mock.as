@@ -115,7 +115,7 @@ package com.anywebcam.mock
 		 * @param target The target that is delegating calls to this Mock
 		 * @param ignoreMissing Indicates whether methods and properties without expectations are ignored
 		 */
-		public function Mock( target:Object = null, ignoreMissing:Boolean = false )
+		public function Mock( target:Object = null, ignoreMissing:Boolean = false, name:String=null )
 		{
 			_target = target;
 			_expectations = [];
@@ -123,6 +123,7 @@ package com.anywebcam.mock
 			_currentOrderNumber = 0;
 			_orderedExpectations = [];
 			_eventDispatcher = new EventDispatcher(this);
+			_name = name;
 		}
 		
 		private var _target:Object;
@@ -202,12 +203,17 @@ package com.anywebcam.mock
 		private var _orderedExpectations:Array;
 		
 		/**
+	     * Name of this Mock
+	     */
+	    private var _name:String;
+		
+		/**
 		 * String representation of this Mock
 		 */
 		public function toString():String
 		{
 			var className:String = getQualifiedClassName( target );
-			return className.slice( className.lastIndexOf(':') + 1 );
+			return (_name ? "("+ _name +")" : "") + className.slice( className.lastIndexOf(':') + 1 );
 		}
 
 		/**
@@ -240,7 +246,7 @@ package com.anywebcam.mock
 		 */
 		public function method( methodName:String ):MockExpectation
 		{
-			return expect().method( methodName );
+            return expect().method( methodName );
 		}
 		
 		/**
