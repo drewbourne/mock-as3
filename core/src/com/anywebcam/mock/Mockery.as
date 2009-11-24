@@ -46,7 +46,7 @@ package com.anywebcam.mock
 
         public function nice(classToMock:Class, constructorArgs:Array=null):*
         {
-            return create(classToMock, constructorArgs, false);
+            return create(classToMock, constructorArgs, true);
         }
 
         public function strict(classToMock:Class, constructorArgs:Array=null):*
